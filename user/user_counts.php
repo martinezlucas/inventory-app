@@ -1,21 +1,31 @@
 <?php
 
     require '../server/connection.php';
+    require '../objects/pagination.php';
 
     session_start();
     
     if(!isset($_SESSION['user_id'])) {
 
         header('location:../');
-
-    } else {
-
-        $user_id = $_SESSION['user_id'];
-
-        $connection = new Connection();
-        $count_by_user = $connection->get_count_by_user($user_id);
-        $user_name = $connection->get_user_name($user_id);
+        die();
     }
+
+    $user_id = $_SESSION['user_id'];
+
+    $connection = new Connection();
+    $user_name = $connection->get_user_name($user_id);
+    $user_codes_count = $connection->get_user_codes_count($user_id);
+
+    /* Paginación */
+    $pagination = new Pagination();
+    $rows_per_page = 4;
+    $pagination->set_rows_per_page($rows_per_page);
+    $pagination->set_total_rows($user_codes_count);
+    $pagination->set_pagination();
+    $index = $pagination->get_index();
+
+    $rows_per_user = $connection->get_rows_per_user($user_id, $index, $rows_per_page);
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +58,7 @@
        <h1 class="center-text">Conteo por usuario</h1>
        <h2 class="center-text">Usuario: <?php echo $user_name; ?></h2>
 
-       <?php while($row = $count_by_user->fetch_assoc()): ?>
+       <?php while($row = $rows_per_user->fetch_assoc()): ?>
             <div class="soft-border card">
                 <p>ID: <?php echo $row['id']; ?></p>
                 <p>Código: <?php echo $row['codigo_producto']; ?></p>
@@ -57,9 +67,12 @@
             </div>
        <?php 
             endwhile; 
-            $count_by_user->free();
+            $rows_per_user->free();
             $connection->close();
        ?>
     </main>
+
+    <?php $pagination->show_buttons(); ?>
+
 </body>
 </html>

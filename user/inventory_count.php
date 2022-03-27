@@ -1,6 +1,7 @@
 <?php
 
     require '../server/connection.php';
+    require '../server/validate.php';
     require '../objects/pagination.php';
 
     session_start();
@@ -20,8 +21,7 @@
     }
 
     $connection = new Connection();
-    $inventory_count = $connection->get_inventory_count();// tabla de inventario
-    //$all_count = $connection->get_all_count();     
+    $inventory_count = $connection->get_inventory_count();// tabla de inventario    
 
     /* Paginación */
     $pagination = new Pagination();
@@ -31,7 +31,33 @@
     $pagination->set_pagination();
     $index = $pagination->get_index();
 
-    $inventory_per_page = $connection->get_inventory_per_page($index, $rows_per_page);
+    $inventory_per_page = $connection->get_rows_per_page($index, $rows_per_page, "inventario", "id");
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {        
+        
+        $validate = new Validate();
+        $code = htmlspecialchars_decode($validate->input($_POST['code']));            
+
+        $error = null;
+        
+        if(empty($code)) {
+
+            $error = "Se ha ingresado una cadena vacía";
+
+        } else {
+
+            $code_count = $connection->check_code($code);
+
+            if($code_count == 0) {
+
+                $error = "No se encuentra el código: " . $code;
+                
+            } else {
+
+                $code_counted = $connection->get_count_by_code($code);
+            }
+        }        
+    }    
 ?>
 
 <!DOCTYPE html>
@@ -81,35 +107,76 @@
                <th class="column-title">Fecha modificación</th>
            </tr>
 
-           <?php 
-                while($row = $inventory_per_page->fetch_assoc()): 
-                    $user_name = $connection->get_user_name($row['id_usuario']);
+           <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
+                <?php if(!empty($error)): ?>
+                    <br>
+                    <p class="center-text"><?php echo $error ?></p>
+                    <br>
 
-                    if(!empty($row['modif_por'])) {
-                        $modified_by = $connection->get_user_name($row['id_usuario']);
-                    } else {
-                        $modified_by = "";
-                    }
-            ?>
-            <tr>
-                <td><?php echo $row['id']; ?></td>
-                <td><?php echo $row['codigo_producto']; ?></td>
-                <td><?php echo $row['cantidad']; ?></td>
-                <td><?php echo $row['ubicacion']; ?></td>
-                <td><?php echo $user_name; ?></td>
-                <td><?php echo $row['registrado']; ?></td>
-                <td><?php echo $modified_by; ?></td>
-                <td><?php echo $row['modificado']; ?></td>
-            </tr>
+                <?php else: ?>
+                    
+                    <?php 
+                        while($row = $code_counted->fetch_assoc()): 
+                            $user_name = $connection->get_user_name($row['id_usuario']);
 
-            <?php 
-                endwhile; 
-                $inventory_per_page->free();
-                $connection->close();
-            ?>
+                            if(!empty($row['modif_por'])) {
+                                $modified_by = $connection->get_user_name($row['id_usuario']);
+                            } else {
+                                $modified_by = "";
+                            }
+                    ?>
+                    <tr>
+                        <td><?php echo $row['id']; ?></td>
+                        <td><?php echo $row['codigo_producto']; ?></td>
+                        <td><?php echo $row['cantidad']; ?></td>
+                        <td><?php echo $row['ubicacion']; ?></td>
+                        <td><?php echo $user_name; ?></td>
+                        <td><?php echo $row['registrado']; ?></td>
+                        <td><?php echo $modified_by; ?></td>
+                        <td><?php echo $row['modificado']; ?></td>
+                    </tr>
+
+                    <?php 
+                        endwhile; 
+                        $code_counted->free();
+                        $connection->close();
+                    ?>
+                <?php endif; ?>
+           <?php else: ?>
+
+                <?php 
+                    while($row = $inventory_per_page->fetch_assoc()): 
+                        $user_name = $connection->get_user_name($row['id_usuario']);
+
+                        if(!empty($row['modif_por'])) {
+                            $modified_by = $connection->get_user_name($row['id_usuario']);
+                        } else {
+                            $modified_by = "";
+                        }
+                ?>
+                <tr>
+                    <td><?php echo $row['id']; ?></td>
+                    <td><?php echo $row['codigo_producto']; ?></td>
+                    <td><?php echo $row['cantidad']; ?></td>
+                    <td><?php echo $row['ubicacion']; ?></td>
+                    <td><?php echo $user_name; ?></td>
+                    <td><?php echo $row['registrado']; ?></td>
+                    <td><?php echo $modified_by; ?></td>
+                    <td><?php echo $row['modificado']; ?></td>
+                </tr>
+                <?php 
+                    endwhile; 
+                    $inventory_per_page->free();
+                    $connection->close();
+                ?>
+            <?php endif; ?>
        </table> 
 
-       <?php $pagination->show_buttons(); ?>                
+       <?php $pagination->show_buttons(); ?>
+
+       <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
+            <a href="inventory_count.php" rel="noreferrer noopener" class="pagination button soft-border hidden-block">Reiniciar</a>
+        <?php endif; ?>
 
     </main>
 </body>

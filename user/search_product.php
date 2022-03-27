@@ -1,12 +1,15 @@
 <?php
 
     require '../server/connection.php';
+    require '../server/validate.php';
 
     session_start();
     
     if(!isset($_SESSION['user_id'])) {
 
         header('location:../');
+        die();
+        
     } else {
 
         $connection = new Connection();
@@ -36,9 +39,10 @@
             $counted_quantity = $last_code_counted['cantidad'];
         }
 
-        if(isset($_POST['search'])) {             
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {             
             
-            $code = trim($connection->get_connection()->real_escape_string($_POST['code']));            
+            $validate = new Validate();
+            $code = htmlspecialchars_decode($validate->input($_POST['code']));            
 
             $error = null;
             $empty_string = false;
@@ -113,12 +117,12 @@
         </div>
 
         <div class="soft-border info" id="code-counted-div">
-            <p>Ubicación: <span><?php echo $location; ?></span></p>
+            <p>Ubicación seleccionada: <span><?php echo $location; ?></span></p>
             <br>
             <a href="locate.php?current_location=<?php echo urlencode($location); ?>" class="button soft-border cl-white bg-blue" style="width: 100%;">Establecer ubicación</a>
         </div>
 
-        <form method="POST" class="form soft-border">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="form soft-border">
             <input type="text" name="code" id="code" placeholder="Código" required>            
             <input type="submit" name="search" value="Buscar">
         </form>

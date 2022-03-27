@@ -108,6 +108,7 @@
                 $connection->close();
             ?>
         </table> 
+        <br>
     </main>
 </body>
 </html>

@@ -68,7 +68,7 @@
             <br>    
             <p>Unidades contadas: <?php echo $sum_of_code; ?></p>
             <br>
-            <p>Ubicación: <?php echo $location; ?></p>
+            <p>Ubicación seleccionada: <?php echo $location; ?></p>
             <br>
             <?php if($sum_of_code > 0): ?>
                 <a href="count_details.php?code=<?php echo urlencode($code_data['codigo']); ?>&page=count" class="button nest-button" style="display: block;">Detalles del conteo</a>

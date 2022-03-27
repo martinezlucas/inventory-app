@@ -169,28 +169,9 @@
             return $codes_count;
         }
 
-        /* codigos totales
-        public function get_codes() {
-            $sql = "select * from producto order by linea asc";
-            $result = $this->mysqli->query($sql);
-            return $result;
-        }*/
-
-        /* Códigos por paginación */
-        public function get_codes_per_page($index, $number_of_rows) {
-            $sql = "select * from producto order by linea asc limit ?, ?";
-            $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("ii", $index, $number_of_rows);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $stmt->close();
-            
-            return $result;
-        }
-
-        /* Inventario por paginación */
-        public function get_inventory_per_page($index, $number_of_rows) {
-            $sql = "select * from inventario order by id asc limit ?, ?";
+        /* Paginación de registros */
+        public function get_rows_per_page($index, $number_of_rows, $table, $column) {
+            $sql = "select * from {$table} order by {$column} asc limit ?, ?";
             $stmt = $this->mysqli->prepare($sql);
             $stmt->bind_param("ii", $index, $number_of_rows);
             $stmt->execute();
@@ -328,7 +309,7 @@
             return $result;
         }
 
-        /* conteo por usuario en inventario */
+        /* conteo por usuario en inventario 
         public function get_count_by_user($user_id) {
             $sql = "select * from inventario where id_usuario = ?";
             $stmt = $this->mysqli->prepare($sql);
@@ -338,6 +319,30 @@
             $stmt->close();
             
             return $result;
+        } */
+
+        /* conteo por usuario en inventario con paginación */
+        public function get_rows_per_user($user_id, $index, $rows_per_page) {
+            $sql = "select * from inventario where id_usuario = ? order by id asc limit ?, ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("iii", $user_id, $index, $rows_per_page);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+            
+            return $result;
+        }
+
+        public function get_user_codes_count($user_id) {
+            $sql = "select count(*) from inventario where id_usuario = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $stmt->bind_result($codes_count);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $codes_count;
         }
 
         /* Búsqueda de códigos similares */
@@ -364,6 +369,13 @@
             return $result;
         }
 
+        /* Codigos de artículos */
+        public function get_codes() {
+            $sql = "select * from producto order by linea asc";
+            $result = $this->mysqli->query($sql);
+            return $result;
+        }
+
         /* códigos agregados general */
         public function get_codes_added() {
             $sql = "select * from producto_agregado";
@@ -371,14 +383,6 @@
 
             return $result;
         }
-
-        /* conteo por usuario en inventario 
-        public function get_all_count() {
-            $sql = "select * from inventario";
-            $result = $this->mysqli->query($sql);
-
-            return $result;
-        } */
         
         /* Obtener nombre de usuario */
         public function get_user_name($user_id) {

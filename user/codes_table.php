@@ -19,8 +19,7 @@
         header('location:../');
         die();
     }
-   
-    
+       
     $connection = new Connection();
     $codes_count = $connection->get_number_of_codes();// tabla de productos    
     $sum_of_all_codes = $connection->get_sum_of_all_codes();// tabla de inventario    
@@ -33,7 +32,7 @@
     $pagination->set_pagination();
     $index = $pagination->get_index();
 
-    $codes_per_page = $connection->get_codes_per_page($index, $rows_per_page);
+    $codes_per_page = $connection->get_rows_per_page($index, $rows_per_page, "producto", "linea");
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {        
         
@@ -58,8 +57,7 @@
 
                 $code_data = $connection->get_code_data($code);
             }
-        }
-        
+        }        
     }      
 ?>
 
@@ -201,7 +199,7 @@
         <?php $pagination->show_buttons(); ?>
 
         <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
-            <a href="../user/codes_table.php" rel="noreferrer noopener" class="pagination button soft-border hidden-block">Reiniciar</a>
+            <a href="codes_table.php" rel="noreferrer noopener" class="pagination button soft-border hidden-block">Reiniciar</a>
         <?php endif; ?>
     </main>
 </body>
