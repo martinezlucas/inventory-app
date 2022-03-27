@@ -1,0 +1,430 @@
+/* Corrección del formato de página */
+html {    
+    font-size: 62.5%;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+*, *:before, *:after {    
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+/* Estilos globales */
+body {
+    font-size: 1.6rem;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+img {
+    width: 15rem;
+    max-width: 100%;
+    display: block;
+    margin: 1rem auto 2rem auto;
+}
+
+h1 {
+    margin-bottom: 0;
+}
+
+h2 {
+    margin-bottom: 2rem;
+}
+
+/* utilidades */
+.center-text {
+    text-align: center;
+}
+
+.button {
+    padding: 1rem 1.5rem;
+    display: inline-block;
+    text-align: center;
+    text-transform: capitalize;
+    font-weight: bold;
+    border-radius: 1.8rem;
+    background-color: white;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.bg-green {
+    background-color: green;
+}
+
+.bg-blue {
+    background-color: blue;
+}
+
+.cl-white {
+    color: white;
+}
+.soft-border {
+    border: 0.1rem solid black;
+    border-radius: 0.5rem;
+}
+
+.nest-button {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    background-color: blue;
+    color: white;
+}
+
+.block-button { /* width 96% center */
+    width: 96%;
+    display: block;
+    margin: auto;
+}
+
+@media(min-width: 769px) {
+
+    .block-button {
+        width: fit-content;
+    }
+}
+
+.column-title {
+    background-color: darkblue;
+    color: yellow;
+}
+
+.center-button {
+    display: block;
+    width: fit-content;
+    margin: 1rem auto;
+    padding: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0.5rem;    
+}
+
+.info {
+    max-width: 96%;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+@media(min-width: 769px) {
+    
+    .info {
+        width: 40rem;
+    }
+}
+
+.card {
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card input,
+.card button,
+.card svg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card input,
+.card button {
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.card svg {
+    height: 8rem;
+}
+
+/* Formulario */
+.form {    
+    padding: 1rem;
+    width: 96%;
+    margin: auto;
+}
+
+.form label {
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.form h2 {
+    margin-bottom: 1rem;    
+}
+
+.form select {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.form input,
+.form textarea,
+.form button {
+    width: 100%;
+}
+
+.form svg {
+    display: block;
+    margin: 1rem auto;
+}
+
+.form input:not([type="submit"]),
+.form textarea {
+    margin-bottom: 1rem;
+    padding: 1rem 0.5rem;
+}
+
+.form input[type="submit"],
+.form button {
+    padding: 1rem 0;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.form textarea {
+    margin-bottom: 1rem;
+}
+
+@media(min-width: 769px) {
+
+    .form {
+        width: 40rem;       
+        margin: auto;
+    }
+}
+
+/* Header */
+.header {
+    background-color: blue;
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.header a:last-of-type {
+    margin-bottom: 0;
+}
+
+@media(min-width: 769px) {
+    
+    .header a {
+        margin-bottom: 0;        
+        width: fit-content;
+    }
+}
+
+/* botón responsive */
+.options {
+    position: relative;
+}
+
+.options:hover .navigation {
+    display: block;
+    box-shadow: -0.8rem 0.5rem 1.5rem 0.5rem rgba(0,0,0,0.25);
+}
+
+.options-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.2rem 0.6rem;
+    width: 5.5rem;
+    height: 5rem;
+    background-color: red;
+    border-radius: 0.5rem;
+}
+
+.options-button span {
+    width: 100%;
+    height: 0.4rem;
+    border-radius: 0.5rem;
+    background-color: white;
+}
+
+.navigation {
+    position: absolute;
+    right: 0;
+    min-width: 16rem;
+    display: none;
+}
+
+.navigation-option {
+    text-transform: capitalize;    
+    padding: 1rem 1.5rem;
+    display: block;
+    text-align: center;    
+    background-color: white;
+    font-weight: bold;
+}
+
+.navigation-option:hover,
+.btn-mn:hover {    
+    background-color: rgb(235, 235, 235);
+}
+
+@media (min-width: 769px) {
+
+    .options:hover .navigation {        
+        box-shadow: none;
+    }
+
+    .options-button {
+        display: none;
+    }
+    
+    .navigation {
+        position: relative;
+        display: unset;
+        background-color: transparent;        
+    }
+
+    .navigation-option {
+        display: inline-block;        
+        border-radius: 1.8rem;
+    }
+
+    .navigation-option:last-of-type {
+        margin-right: 0;
+    }
+}
+
+.warning {
+    background-color: blue;
+    color: white;
+}
+
+/* Estilo de menú */
+.menu {
+    margin: 0 1rem;
+    padding: 1rem;
+}
+
+.menu a {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.menu a:last-of-type {
+    margin-bottom: 0;
+}
+
+@media(min-width: 769px) {
+    .menu {
+        width: 50rem;
+        margin: 0 auto;
+    }       
+}
+
+/* Tabla */
+.table {
+    border-collapse: collapse;
+    max-width: 96%;
+    margin: auto;    
+}
+
+.hidden-table,
+.hidden-block {
+    display: none;
+}
+
+.table th,
+.table td  {    
+    border: 0.1rem solid black;
+    padding: 0.5rem;
+}
+
+.table td {
+    font-size: 1.4rem;
+}
+
+@media(min-width: 769px) {
+    
+    .table {        
+        margin: auto;
+        width: auto;
+    }
+
+    .hidden-table {
+        display: table;
+    }
+
+    .hidden-block {
+        display: block;
+    }
+    
+    .hidden-message {
+        display: none;
+    }
+}
+
+/* Botón de tabla */
+.button-table {    
+    background-color: green;
+    color: white;
+    padding: 0.5rem;
+    margin: 0.1rem auto;
+    display: inline-block;
+}
+
+/* Botón para cargar archivo csv */
+.hidden-input {
+    display: none;
+}
+
+.load-button {
+    display: block;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 1.5rem 0;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.load-button:hover {
+    cursor: pointer;
+}
+
+.pagination {
+    width: fit-content;
+    margin: 2rem auto 0 auto;
+    padding: 1rem;
+}
+
+.pagination a {
+    margin-right: 0.5rem;
+}
+
+.pagination a:last-of-type {
+    margin-right: 0;
+}
+
+.search {    
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    width: fit-content;
+    margin: 1rem auto 0 auto;
+}
+
+.search input {
+    padding: 0.5rem;    
+}
+
+.search input[type="text"] {
+    width: 35rem;
+}
