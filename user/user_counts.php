@@ -73,6 +73,7 @@
     </main>
 
     <?php $pagination->show_buttons(); ?>
+    <br>
 
 </body>
 </html>

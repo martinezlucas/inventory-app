@@ -28,6 +28,7 @@
     $rows_per_page = 10;
     $pagination->set_rows_per_page($rows_per_page);
     $pagination->set_total_rows($inventory_count);
+    $pagination->set_buttons_hidden(true);
     $pagination->set_pagination();
     $index = $pagination->get_index();
 

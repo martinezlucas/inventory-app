@@ -8,6 +8,7 @@
         private $total_pages;
         private $previous_page;
         private $next_page;
+        private $div_style = "soft-border pagination";
 
         public function set_rows_per_page($rows_per_page) {
             $this->rows_per_page = $rows_per_page;
@@ -17,7 +18,14 @@
             $this->total_rows = $total_rows;
         }
 
+        public function set_buttons_hidden($hidden) {
+            if($hidden) {
+                $this->div_style .= " hidden-block";
+            }
+        }
+
         public function set_pagination() {
+
             if($_SERVER['REQUEST_METHOD'] == 'POST') {
         
                 $this->total_pages = 1;
@@ -37,7 +45,12 @@
             
                         $page = 1;
                         $this->previous_page = 1;
-                        $this->next_page = 1;
+                        
+                        if($this->total_pages > 1) {
+                            $this->next_page = 2;
+                        } else {
+                            $this->next_page = 1;
+                        }
                         
                     } else {
                 
@@ -80,7 +93,7 @@
 
             if($_SERVER['REQUEST_METHOD'] != 'POST' && $this->total_pages > 1) {
                 
-                echo "<div class='soft-border pagination hidden-block'>";
+                echo "<div class='{$this->div_style}'>";
                 echo "<a href='?page_number=1' rel='noreferrer noopener' class='button soft-border'><<</a>";
                 echo "<a href='?page_number=" . $this->previous_page. "' rel='noreferrer noopener' class='button soft-border'><</a>";
                 echo "<a href='?page_number=" . $this->next_page . "' rel='noreferrer noopener' class='button soft-border'>></a>";
