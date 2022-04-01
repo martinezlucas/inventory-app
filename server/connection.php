@@ -317,6 +317,18 @@
             return $result;
         }
 
+        /* conteo por producto y usuario en inventario */
+        public function get_count_by_code_and_user($code, $user_id) {
+            $sql = "select * from inventario where codigo_producto = ? and id_usuario = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("si", $code, $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+            
+            return $result;
+        }
+
         /* conteo por usuario en inventario con paginación */
         public function get_rows_per_user($user_id, $index, $rows_per_page) {
             $sql = "select * from inventario where id_usuario = ? order by id asc limit ?, ?";

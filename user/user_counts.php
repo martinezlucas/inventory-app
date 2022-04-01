@@ -1,6 +1,7 @@
 <?php
 
     require '../server/connection.php';
+    require '../server/validate.php';
     require '../objects/pagination.php';
 
     session_start();
@@ -26,6 +27,32 @@
     $index = $pagination->get_index();
 
     $rows_per_user = $connection->get_rows_per_user($user_id, $index, $rows_per_page);
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {        
+        
+        $validate = new Validate();
+        $code = htmlspecialchars_decode($validate->input($_POST['code']));            
+
+        $error = null;
+        
+        if(empty($code)) {
+
+            $error = "Se ha ingresado una cadena vacía";
+
+        } else {
+
+            $code_count = $connection->check_code($code);
+
+            if($code_count == 0) {
+
+                $error = "No se encuentra el código: " . $code;
+                
+            } else {
+
+                $code_counted_by_user = $connection->get_count_by_code_and_user($code, $user_id);
+            }
+        }        
+    }    
 ?>
 
 <!DOCTYPE html>
@@ -58,22 +85,64 @@
        <h1 class="center-text">Conteo por usuario</h1>
        <h2 class="center-text">Usuario: <?php echo $user_name; ?></h2>
 
-       <?php while($row = $rows_per_user->fetch_assoc()): ?>
-            <div class="soft-border card">
-                <p>ID: <?php echo $row['id']; ?></p>
-                <p>Código: <?php echo $row['codigo_producto']; ?></p>
-                <p>Cantidad: <?php echo $row['cantidad']; ?></p>
-                <p>registrado: <?php echo $row['registrado']; ?></p>
-            </div>
-       <?php 
-            endwhile; 
-            $rows_per_user->free();
-            $connection->close();
-       ?>
+       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search">
+            <input type="text" name="code" id="code" placeholder="Buscar código" required>            
+            <input type="submit" name="search" value="&#128269;">
+        </form>
+
+        <br>
+
+        <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
+            <?php if(!empty($error)): ?>
+                <br>
+                <p class="center-text"><?php echo $error ?></p>
+                <br>
+            <?php else: ?>
+                    
+                <?php while($row = $code_counted_by_user->fetch_assoc()): ?>
+
+                    <div class="soft-border card">
+                        <p>ID: <?php echo $row['id']; ?></p>
+                        <p>Código: <?php echo $row['codigo_producto']; ?></p>
+                        <p>Cantidad: <?php echo $row['cantidad']; ?></p>
+                        <p>Ubicación: <?php echo $row['ubicacion']; ?></p>
+                        <p>registrado: <?php echo $row['registrado']; ?></p>
+
+                        <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="center-button soft-border cl-white bg-blue">Modificar</a>
+                    </div>                
+
+                <?php 
+                    endwhile; 
+                    $code_counted_by_user->free();
+                    $connection->close();
+                ?>
+            <?php endif; ?>
+
+        <?php else: ?>
+            
+            <?php while($row = $rows_per_user->fetch_assoc()): ?>
+                <div class="soft-border card">
+                    <p>ID: <?php echo $row['id']; ?></p>
+                    <p>Código: <?php echo $row['codigo_producto']; ?></p>
+                    <p>Cantidad: <?php echo $row['cantidad']; ?></p>
+                    <p>Ubicación: <?php echo $row['ubicacion']; ?></p>
+                    <p>registrado: <?php echo $row['registrado']; ?></p>
+
+                    <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="center-button soft-border cl-white bg-blue">Modificar</a>
+                </div>
+            <?php 
+                endwhile; 
+                $rows_per_user->free();
+                $connection->close();
+            ?>
+
+        <?php endif; ?>
     </main>
 
     <?php $pagination->show_buttons(); ?>
-    <br>
-
+    
+    <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
+        <a href="user_counts.php" rel="noreferrer noopener" class="center-button soft-border">Reiniciar</a>
+    <?php endif; ?>
 </body>
 </html>

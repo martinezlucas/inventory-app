@@ -103,7 +103,7 @@ h2 {
     margin: 1rem auto;
     padding: 1rem;
     font-weight: bold;
-    text-transform: uppercase;
+    text-transform: capitalize;
     border-radius: 0.5rem;    
 }
 
@@ -401,7 +401,7 @@ h2 {
 
 .pagination {
     width: fit-content;
-    margin: 2rem auto 0 auto;
+    margin: 1rem auto;
     padding: 1rem;
 }
 
@@ -426,5 +426,12 @@ h2 {
 }
 
 .search input[type="text"] {
-    width: 35rem;
+    width: auto;
+}
+
+@media(min-width: 769px) {
+
+    .search input[type="text"] {
+        width: 35rem;
+    }    
 }

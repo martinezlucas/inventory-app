@@ -4,16 +4,10 @@
 
     session_start();
     
-    if(isset($_SESSION['user_id']) && isset($_SESSION['user_rol'])) {
-
-        if($_SESSION['user_rol'] != 1) {
-
-            header('location:../');
-        }
-
-    } else {
+    if(!isset($_SESSION['user_id'])) {
 
         header('location:../');
+        die();
     }
 
     $id = $_GET['id'];
@@ -30,6 +24,14 @@
     }
 
     $connection->close();
+
+    /* Se verifica que los usuarios sin privilegios de administrador solo puedan modificar sus registros */
+    if($_SESSION['user_rol'] != 1) {
+        if($_SESSION['user_id'] != $count_data['id_usuario']) {
+            header('location:../');
+            die();
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +53,12 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="count_details.php?code=<?php echo $count_data['codigo_producto']; ?>&page=<?php echo $page; ?>" class="navigation-option">Atrás</a>
+                <?php if($page == "user_counts"): ?>
+                    <a href="user_counts.php" class="navigation-option">Atrás</a>
+                <?php else: ?>
+                    <a href="count_details.php?code=<?php echo $count_data['codigo_producto']; ?>&page=<?php echo $page; ?>" class="navigation-option">Atrás</a>
+                <?php endif; ?>
+
                 <a href="../user/menu.php" class="navigation-option">Menú principal</a>
                 <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
             </nav>
@@ -60,6 +67,7 @@
 
     <main>        
         <h1 class="center-text">Actualizar conteo</h1>
+        <br>
         <form action="../server/update_count.php" id="sent-form" method="POST" class="form soft-border">
             <p>ID: <?php echo $count_data['id']; ?></p>
             <br>
