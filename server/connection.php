@@ -297,6 +297,14 @@
             return $code_sum;
         }
 
+        /* conteo por usuario en inventario */
+        public function get_all_count() {
+            $sql = "select * from inventario";
+            $result = $this->mysqli->query($sql);
+
+            return $result;
+        }
+
         /* conteo por producto en inventario */
         public function get_count_by_code($code) {
             $sql = "select * from inventario where codigo_producto = ?";
