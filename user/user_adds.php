@@ -50,11 +50,18 @@
        <?php while($row = $adds_by_user->fetch_assoc()): ?>
 
             <div class="soft-border card">
+                <p>ID: <?php echo $row['id']; ?></p>
                 <p>Código: <?php echo $row['codigo']; ?></p>
                 <p>Cantidad: <?php echo $row['cantidad']; ?></p>
                 <p>Descripción: <?php echo $row['descripcion']; ?></p>
                 <p>Ubicación: <?php echo $row['ubicacion']; ?></p>
-                <p>registrado: <?php echo $row['registrado']; ?></p>
+                <p>Registrado: <?php echo $row['registrado']; ?></p>
+                <p>Modificado: <?php echo $row['modificado']; ?></p>
+
+                <div class="card-menu">
+                    <a href="modify_add.php?id=<?php echo $row['id']; ?>&page=user_adds" class="button soft-border cl-white bg-green">Modificar</a>
+                    <button id="delete-button" class="delete-button" onclick="deleteAdd(<?php echo $row['id']; ?>, 'user_adds')" style="display: inline;">Eliminar conteo</button>
+                </div>
             </div>
         <?php 
             endwhile; 
@@ -62,5 +69,6 @@
             $connection->close();
         ?>
     </main>
+    <script src="../js/confirm.js"></script>
 </body>
 </html>

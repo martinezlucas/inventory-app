@@ -1,10 +1,17 @@
-const queryString = window.location.search;
+/*const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const page = urlParams.get('page');
+const page = urlParams.get('page');*/
 
-function deleteCount(id, code) {
+function deleteCount(id, code, page) {
 
     if(confirm('Eliminar este conteo es irreversible, ¿desea continuar?')) {
         window.location.href = "../server/delete_count.php?id_count=" + id + "&code=" + code + "&page=" + page;
+    }
+}
+
+function deleteAdd(id, page) {
+
+    if(confirm('Eliminar este conteo es irreversible, ¿desea continuar?')) {
+        window.location.href = "../server/delete_add.php?id_add=" + id + "&page=" + page;
     }
 }

@@ -405,7 +405,13 @@ h2 {
     padding: 1rem;
 }
 
-.pagination a {
+.card-menu {
+    width: fit-content;
+    margin: auto;
+}
+
+.pagination a,
+.card-menu a {
     margin-right: 0.5rem;
 }
 
@@ -434,4 +440,13 @@ h2 {
     .search input[type="text"] {
         width: 35rem;
     }    
+}
+
+.delete-button {
+    background-color: red;
+    color: white;
+    text-transform: capitalize;
+    font-weight: bold;
+    border: 0.1rem solid black;
+    border-radius: 0.5rem;
 }

@@ -330,6 +330,33 @@ begin
 end //
 delimiter ;
 
+/* eliminar producto agregado */
+drop procedure if exists eliminar_agregado;
+delimiter //
+create procedure eliminar_agregado(in var_id int,
+							       out agregado_eliminado tinyint)
+
+begin
+
+	declare sql_error tinyint default false;
+    declare continue handler for sqlexception
+		set sql_error = true;
+        
+	start transaction;
+		
+        delete from producto_agregado where id = var_id;
+    
+    if sql_error = false then
+		commit;
+        set agregado_eliminado = 1;
+	else
+		rollback;
+        set agregado_eliminado = 0;
+	end if;  
+    
+end //
+delimiter ;
+
 /* actualizar conteo */
 drop procedure if exists actualizar_conteo;
 delimiter //
@@ -391,6 +418,44 @@ begin
 	else
 		rollback;
         set ubicacion_establecida = 0;
+	end if;  
+    
+end //
+delimiter ;
+
+/* actualizar código agregado */
+drop procedure if exists actualizar_agregado;
+delimiter //
+create procedure actualizar_agregado(in var_id_usuario int,
+								     in var_id int,
+								     in var_codigo varchar(64),
+                                     in var_descripcion varchar(255),
+                                     in var_cantidad float,
+                                     in var_ubicacion varchar(32),
+							         out agregado_actualizado tinyint)
+
+begin
+
+	declare sql_error tinyint default false;
+    declare continue handler for sqlexception
+		set sql_error = true;
+        
+	start transaction;
+		
+        update producto_agregado set codigo = var_codigo,
+									 descripcion = var_descripcion,
+									 cantidad = var_cantidad, 
+                                     ubicacion = var_ubicacion, 
+                                     modif_por = var_id_usuario,
+                                     modificado = current_timestamp()
+        where id = var_id;
+    
+    if sql_error = false then
+		commit;
+        set agregado_actualizado = 1;
+	else
+		rollback;
+        set agregado_actualizado = 0;
 	end if;  
     
 end //

@@ -107,8 +107,6 @@
                         <p>Cantidad: <?php echo $row['cantidad']; ?></p>
                         <p>Ubicación: <?php echo $row['ubicacion']; ?></p>
                         <p>registrado: <?php echo $row['registrado']; ?></p>
-
-                        <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="center-button soft-border cl-white bg-blue">Modificar</a>
                     </div>                
 
                 <?php 
@@ -127,8 +125,11 @@
                     <p>Cantidad: <?php echo $row['cantidad']; ?></p>
                     <p>Ubicación: <?php echo $row['ubicacion']; ?></p>
                     <p>registrado: <?php echo $row['registrado']; ?></p>
-
-                    <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="center-button soft-border cl-white bg-blue">Modificar</a>
+                    <br>
+                    <div class="card-menu">
+                        <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="button soft-border cl-white bg-green">Modificar</a>
+                        <button id="delete-button" class="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $row['codigo_producto']; ?>', 'user_counts')" style="display: inline;">Eliminar conteo</button>
+                    </div>
                 </div>
             <?php 
                 endwhile; 
@@ -137,12 +138,13 @@
             ?>
 
         <?php endif; ?>
-    </main>
-
-    <?php $pagination->show_buttons(); ?>
+        <br>
+        <?php $pagination->show_buttons(); ?>
     
-    <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
-        <a href="user_counts.php" rel="noreferrer noopener" class="center-button soft-border">Reiniciar</a>
-    <?php endif; ?>
+        <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
+            <a href="user_counts.php" rel="noreferrer noopener" class="center-button soft-border">Reiniciar</a>
+        <?php endif; ?>
+    </main>
+    <script src="../js/confirm.js"></script>
 </body>
 </html>

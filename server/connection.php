@@ -476,6 +476,32 @@
             return $row;
         }
 
+        /* verificar si un conteo corresponde a un usuario */
+        public function check_count_by_user($id_count, $user_id) {
+            $sql = "select count(*) from inventario where id = ? and id_usuario = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("ii", $id_count, $user_id);
+            $stmt->execute();
+            $stmt->bind_result($count_verified);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $count_verified;
+        }
+
+        /* verificar si un codigo agregado corresponde a un usuario */
+        public function check_add_by_user($id_add, $user_id) {
+            $sql = "select count(*) from producto_agregado where id = ? and id_usuario = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("ii", $id_add, $user_id);
+            $stmt->execute();
+            $stmt->bind_result($add_verified);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $add_verified;
+        }
+
         /* eliminar conteo del inventario */
         public function delete_count($id_count) {
             $sql = "call eliminar_conteo(?, @conteo_eliminado)";
@@ -492,9 +518,38 @@
             return $count_deleted;
         }
 
+        /* eliminar conteo del inventario */
+        public function delete_add($id_add) {
+            $sql = "call eliminar_agregado(?, @agregado_eliminado)";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("i", $id_add);
+            $stmt->execute();
+            $sql = "select @agregado_eliminado";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->execute();
+            $stmt->bind_result($add_deleted);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $add_deleted;
+        }
+
         /* obtener conteo individual */
         public function get_count_data($id) {
             $sql = "select * from inventario where id = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+            $row = $result->fetch_assoc();
+            
+            return $row;
+        }
+
+        /* obtener codigos agregados por usuario */
+        public function get_add_data($id) {
+            $sql = "select * from producto_agregado where id = ?";
             $stmt = $this->mysqli->prepare($sql);
             $stmt->bind_param("i", $id);
             $stmt->execute();
@@ -519,6 +574,22 @@
             $stmt->close();
 
             return $count_updated;
+        }
+
+        /* actualizar un conteo */
+        public function update_add($user_id, $id_add, $code, $description, $quantity, $location) {
+            $sql = "call actualizar_agregado(?, ?, ?, ?, ?, ?, @agregado_actualizado)";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("iissds", $user_id, $id_add, $code, $description, $quantity, $location);
+            $stmt->execute();
+            $sql = "select @agregado_actualizado";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->execute();
+            $stmt->bind_result($add_updated);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $add_updated;
         }
     }    
 ?>

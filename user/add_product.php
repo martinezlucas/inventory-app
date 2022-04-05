@@ -42,6 +42,8 @@
     <main>        
         <h1 class="center-text">Agregar producto</h1>
 
+        <br>
+
         <form action="../server/add_count.php" method="POST" class="form soft-border">
             <label for="code">Código</label>
             <input type="text" id="code" name="code" placeholder="Código" required>

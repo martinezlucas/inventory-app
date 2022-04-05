@@ -46,7 +46,7 @@
     <main>
                
        <h1 class="center-text">Registro de conteos por código</h1>
-
+       <br>
        <table class="table">           
            <tr>
                <th class="column-title">ID</th>
@@ -81,7 +81,7 @@
                 <td><?php echo $modified_by; ?></td>
                 <td><?php echo $row['modificado']; ?></td>
                 <td><a href="modify_count.php?id=<?php echo urlencode($row['id']); ?>&page=<?php echo $page; ?>" class="button-table">Modificar</a></td>
-                <td><button id="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $product_code; ?>')">Eliminar conteo</button></td>
+                <td><button id="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $product_code; ?>', '<?php echo $page; ?>')">Eliminar conteo</button></td>
             </tr>
 
             <?php 
