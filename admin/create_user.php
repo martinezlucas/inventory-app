@@ -9,15 +9,17 @@
         if($_SESSION['user_rol'] != 1) {
 
             header('location:../');
+            die();
         }
 
     } else {
 
         header('location:../');
+        die();
     }
 
     $connection = new Connection();
-    $roles = $connection->get_roles();
+    $roles = $connection->get_table('rol');
 ?>
 
 <!DOCTYPE html>

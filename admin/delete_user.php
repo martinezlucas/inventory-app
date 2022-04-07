@@ -17,7 +17,7 @@
     }
 
     $connection = new Connection();
-    $user_data = $connection->get_user_data(intval($_GET['id']));
+    $user_data = $connection->get_row_by_id('persona', intval($_GET['id']));
     $user_deleted = $connection->delete_user(intval($_GET['id']));
     $connection->close();
     

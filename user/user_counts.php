@@ -5,8 +5,8 @@
     require '../objects/pagination.php';
 
     session_start();
-    
-    if(!isset($_SESSION['user_id'])) {
+
+    if (!isset($_SESSION['user_id'])) {
 
         header('location:../');
         die();
@@ -16,7 +16,7 @@
 
     $connection = new Connection();
     $user_name = $connection->get_user_name($user_id);
-    $user_codes_count = $connection->get_user_codes_count($user_id);
+    $user_codes_count = $connection->get_counts_by_user('inventario', $user_id);
 
     /* Paginación */
     $pagination = new Pagination();
@@ -26,37 +26,36 @@
     $pagination->set_pagination();
     $index = $pagination->get_index();
 
-    $rows_per_user = $connection->get_rows_per_user($user_id, $index, $rows_per_page);
+    $rows_per_user = $connection->get_paginated_table_by_user('inventario', $user_id, $index, $rows_per_page);
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {        
-        
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
         $validate = new Validate();
-        $code = htmlspecialchars_decode($validate->input($_POST['code']));            
+        $code = htmlspecialchars_decode($validate->input($_POST['code']));
 
         $error = null;
-        
-        if(empty($code)) {
+
+        if (empty($code)) {
 
             $error = "Se ha ingresado una cadena vacía";
-
         } else {
 
             $code_count = $connection->check_code($code);
 
-            if($code_count == 0) {
+            if ($code_count == 0) {
 
                 $error = "No se encuentra el código: " . $code;
-                
             } else {
 
                 $code_counted_by_user = $connection->get_count_by_code_and_user($code, $user_id);
             }
-        }        
-    }    
+        }
+    }
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -65,6 +64,7 @@
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
+
 <body>
     <header class="header">
         <div class="options">
@@ -81,25 +81,25 @@
     </header>
 
     <main>
-               
-       <h1 class="center-text">Conteo por usuario</h1>
-       <h2 class="center-text">Usuario: <?php echo $user_name; ?></h2>
 
-       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search">
-            <input type="text" name="code" id="code" placeholder="Buscar código" required>            
+        <h1 class="center-text">Conteo por usuario</h1>
+        <br>
+        <h2 class="center-text">Usuario: <?php echo $user_name; ?></h2>
+
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search">
+            <input type="text" name="code" id="code" placeholder="Buscar código" required>
             <input type="submit" name="search" value="&#128269;">
         </form>
 
         <br>
 
-        <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
-            <?php if(!empty($error)): ?>
+        <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') : ?>
+            <?php if (!empty($error)) : ?>
                 <br>
                 <p class="center-text"><?php echo $error ?></p>
                 <br>
-            <?php else: ?>
-                    
-                <?php while($row = $code_counted_by_user->fetch_assoc()): ?>
+            <?php else : ?>
+                <?php while ($row = $code_counted_by_user->fetch_assoc()) : ?>
 
                     <div class="soft-border card">
                         <p>ID: <?php echo $row['id']; ?></p>
@@ -107,18 +107,21 @@
                         <p>Cantidad: <?php echo $row['cantidad']; ?></p>
                         <p>Ubicación: <?php echo $row['ubicacion']; ?></p>
                         <p>registrado: <?php echo $row['registrado']; ?></p>
-                    </div>                
+                        <div class="card-menu">
+                            <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="button soft-border cl-white bg-green">Modificar</a>
+                            <button id="delete-button" class="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $row['codigo_producto']; ?>', 'user_counts')" style="display: inline;">Eliminar conteo</button>
+                        </div>
+                    </div>
 
-                <?php 
-                    endwhile; 
+                <?php
+                    endwhile;
                     $code_counted_by_user->free();
-                    $connection->close();
                 ?>
             <?php endif; ?>
 
-        <?php else: ?>
-            
-            <?php while($row = $rows_per_user->fetch_assoc()): ?>
+        <?php else : ?>
+
+            <?php while ($row = $rows_per_user->fetch_assoc()) : ?>
                 <div class="soft-border card">
                     <p>ID: <?php echo $row['id']; ?></p>
                     <p>Código: <?php echo $row['codigo_producto']; ?></p>
@@ -131,20 +134,23 @@
                         <button id="delete-button" class="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $row['codigo_producto']; ?>', 'user_counts')" style="display: inline;">Eliminar conteo</button>
                     </div>
                 </div>
-            <?php 
-                endwhile; 
+            <?php
+                endwhile;
                 $rows_per_user->free();
-                $connection->close();
             ?>
 
         <?php endif; ?>
         <br>
+
+        <?php $connection->close(); ?>
+
         <?php $pagination->show_buttons(); ?>
-    
-        <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
+
+        <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') : ?>
             <a href="user_counts.php" rel="noreferrer noopener" class="center-button soft-border">Reiniciar</a>
         <?php endif; ?>
     </main>
     <script src="../js/confirm.js"></script>
 </body>
+
 </html>

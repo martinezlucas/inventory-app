@@ -135,6 +135,7 @@
                         <td><?php echo $row['registrado']; ?></td>
                         <td><?php echo $modified_by; ?></td>
                         <td><?php echo $row['modificado']; ?></td>
+                        <td><a href="count_details.php?code=<?php echo urlencode($row['codigo_producto']); ?>&page=inventory" rel="noreferrer noopener" class="button-table">Detalles conteo</a></td>
                     </tr>
 
                     <?php 
@@ -164,6 +165,7 @@
                     <td><?php echo $row['registrado']; ?></td>
                     <td><?php echo $modified_by; ?></td>
                     <td><?php echo $row['modificado']; ?></td>
+                    <td><a href="count_details.php?code=<?php echo urlencode($row['codigo_producto']); ?>&page=inventory" rel="noreferrer noopener" class="button-table">Detalles conteo</a></td>
                 </tr>
                 <?php 
                     endwhile; 

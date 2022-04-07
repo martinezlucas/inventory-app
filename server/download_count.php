@@ -33,7 +33,7 @@
                            'Fecha modificación'));
     
     $connection = new Connection();
-    $all_count = $connection->get_all_count();
+    $all_count = $connection->get_table('inventario');
 
     while($row = $all_count->fetch_assoc()) {
 

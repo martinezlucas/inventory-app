@@ -105,53 +105,11 @@ create table producto_agregado(
 )
 engine = InnoDB;
 
-/* Tablas para código de barras */
-create table tipo_barra(
-	id int not null auto_increment,
-    descripcion varchar(128),    
-    usuario int not null,
-    creado datetime not null,
-    modificador int,
-    modificado datetime,
-    
-    constraint pk_tipo_barra
-    primary key(id),
-    
-    constraint fk_tipo_barra_persona_1
-    foreign key(usuario)
-    references persona(id),
-    
-    constraint fk_tipo_barra_persona_2
-    foreign key(modificador)
-    references persona(id)
-)
-engine = InnoDB;
-
-create table barra(
-	id int not null auto_increment,
-    id_tipo int not null,
-    descripcion varchar(255) not null,
-    
-    usuario int not null,
-    creado datetime not null,
-    modificador int,
-    modificado datetime,
-    
-    constraint pk_barra
-    primary key(id),
-    
-    constraint fk_barra_persona_1
-    foreign key(usuario)
-    references persona(id),
-    
-    constraint fk_barra_persona_2
-    foreign key(modificador)
-    references persona(id)
-)
-engine = InnoDB;
-
 /* Ubicación temporar */
-create table tmp_ubicacion(
-	codigo varchar(32)
+create table ubicacion(
+	codigo varchar(32) not null,
+    id_usuario int not null
 )
 engine = InnoDB;
+
+insert into ubicacion(codigo, id_usuario) values('SIN ESTABLECER', 1);

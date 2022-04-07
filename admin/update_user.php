@@ -17,8 +17,9 @@
     }
 
     $connection = new Connection();
-    $user_data = $connection->get_user_data($_GET['id']);
-    $roles = $connection->get_roles();
+    $user_data = $connection->get_row_by_id('persona', $_GET['id']);
+    $roles = $connection->get_table('rol');
+    $location = $connection->get_location_by_user($_GET['id']);
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +41,7 @@
     </header>
 
     <main>        
-        <h1 class="center-text">Creación de usuarios</h1>
+        <h1 class="center-text">Actualizar usuario</h1>
 
         <form action="../server/update_profile.php" class="form soft-border" method="POST">
             <p>ID: <?php echo $user_data['id']; ?></p>
@@ -50,8 +51,10 @@
             <input type="text" id="name" name="name" value="<?php echo $user_data['nombre']; ?>" placeholder="Nombre" required>
             <label for="user-name">Nombre de usuario</label>
             <input type="text" id="user-name" name="user-name" value="<?php echo $user_data['usuario']; ?>" placeholder="Usuario" required>
-            <label for="password">Resetear contraseña</label>
+            <label for="password">Reestablecer contraseña</label>
             <input type="password" id="password" name="password" placeholder="Dejar en blanco si no se actualiza">
+            <label for="location">Reestablecer ubicacion</label>
+            <input type="text" id="location" name="location" value="<?php echo $location; ?>">
             <label for="role">Rol</label>
             <select name="role" id="role" name="role">
                 <option value="" disabled required>Elige un rol</option>

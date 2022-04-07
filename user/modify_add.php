@@ -14,7 +14,7 @@
     $page = $_GET['page'];
     
     $connection = new Connection();
-    $add_data = $connection->get_add_data($id);
+    $add_data = $connection->get_row_by_id('producto_agregado', $id);
     $user_name = $connection->get_user_name($add_data['id_usuario']);
 
     if(empty($add_data['modif_por'])) {

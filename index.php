@@ -29,7 +29,7 @@
             
             if($user_id != 0) {
 
-                $user_data = $connection->get_user_data($user_id);
+                $user_data = $connection->get_row_by_id('persona', $user_id);
                 $connection->close();
 
                 session_start();

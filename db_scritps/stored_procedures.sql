@@ -393,31 +393,54 @@ drop procedure if exists establecer_ubicacion;
 
 delimiter //
 create procedure establecer_ubicacion(in var_codigo varchar(32),
+									  in var_id_usuario int, 									   
 								      out ubicacion_establecida tinyint)
 
 begin
 	
-    declare ubicacion_encontrada tinyint default 0;
 	declare sql_error tinyint default false;
     declare continue handler for sqlexception
 		set sql_error = true;
         
 	start transaction;
-    
-		select count(*) into ubicacion_encontrada from tmp_ubicacion;
-        
-        if ubicacion_encontrada = 0 then
-			insert into tmp_ubicacion(codigo) values(var_codigo);
-		else
-			update tmp_ubicacion set codigo = var_codigo;
-		end if;
-    
+		
+        insert into ubicacion(codigo, id_usuario) values(var_codigo, var_id_usuario);
+			
     if sql_error = false then
 		commit;
         set ubicacion_establecida = 1;
 	else
 		rollback;
         set ubicacion_establecida = 0;
+	end if;  
+    
+end //
+delimiter ;
+
+/* Actualizar ubicación */
+drop procedure if exists actualizar_ubicacion;
+
+delimiter //
+create procedure actualizar_ubicacion(in var_codigo varchar(32),
+									  in var_id_usuario int, 									   
+								      out ubicacion_actualizada tinyint)
+
+begin
+	
+	declare sql_error tinyint default false;
+    declare continue handler for sqlexception
+		set sql_error = true;
+        
+	start transaction;
+		
+        update ubicacion set codigo = var_codigo where id_usuario = var_id_usuario;
+			
+    if sql_error = false then
+		commit;
+        set ubicacion_actualizada = 1;
+	else
+		rollback;
+        set ubicacion_actualizada = 0;
 	end if;  
     
 end //

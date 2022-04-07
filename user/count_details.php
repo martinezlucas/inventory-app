@@ -15,12 +15,26 @@
         $connection = new Connection();
         $count_by_code = $connection->get_count_by_code($code);
 
-        if($page == 'count') {
-            $back = 'count.php?code=' . urlencode($code) . '&page=search';
-        } else if($page == 'differences') {
-            $back = 'differences.php';
-        } else {
-            $back = 'codes_table.php';
+        switch($page) {
+            case 'count':
+                $back = 'count.php?code=' . urlencode($code) . '&page=search';
+                break;
+            
+            case 'differences':
+                $back = 'differences.php';    
+                break;
+            
+            case 'table':
+                $back = 'codes_table.php';    
+                break;
+            
+            case 'inventory':
+                $back = 'inventory_count.php';    
+                break;
+
+            default:
+                header('location:../');
+                die();
         }
     }
 ?>

@@ -17,7 +17,7 @@
     }
 
     $connection = new Connection();
-    $users = $connection->get_users();
+    $users = $connection->get_table('persona');
 ?>
 
 <!DOCTYPE html>

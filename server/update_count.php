@@ -32,12 +32,17 @@
                         break;
 
                     case "table":
-                        header('location:../user/count_details.php?code=' . urlencode($code) . "&page=differences");
+                        header('location:../user/count_details.php?code=' . urlencode($code) . "&page=table");
                         die();
                         break;
 
                     case "user_counts":
                         header('location:../user/user_counts.php');
+                        die();
+                        break;
+
+                    case "inventory":
+                        header('location:../user/inventory_count.php');
                         die();
                         break;
                     

@@ -18,7 +18,7 @@
 
     $user_id = $_SESSION['user_id'];
     $connection = new Connection();
-    $codes_added = $connection->get_codes_added();
+    $codes_added = $connection->get_table('producto_agregado');
 ?>
 
 <!DOCTYPE html>

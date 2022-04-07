@@ -42,13 +42,63 @@
 
             return $user_id;
         }
+        
+        public function get_table($table_name) {
+            $sql = "select * from {$table_name}";
+            $table = $this->mysqli->query($sql);
 
-        /* obtener tabla de usuario */
-        public function get_users() {
-            $sql = "select * from persona";
-            $result = $this->mysqli->query($sql);
+            return $table;
+        }
+        
+        public function get_row_by_id($table_name, $id) {
+            $sql = "select * from {$table_name} where id = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+            $row = $result->fetch_assoc();
+            
+            return $row;
+        }        
+
+        public function get_counts_by_user($table_name, $user_id) {
+            $sql = "select count(*) from {$table_name} where id_usuario = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $stmt->bind_result($counts);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $counts;
+        }
+
+
+        public function get_location_by_user($user_id) {
+            $sql = "select codigo from ubicacion where id_usuario = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $stmt->bind_result($location);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $location;
+        }
+
+        ////////////////////////////////////////////////////////////////////
+        public function get_paginated_table_by_user($table_name, $user_id, $index, $rows_per_page) {
+            $sql = "select * from {$table_name} where id_usuario = ? order by id asc limit ?, ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("iii", $user_id, $index, $rows_per_page);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+            
             return $result;
         }
+        ////////////////////////////////////////////////////////////////////        
 
         /* crear usuarios */
         public function create_user($name, $user_name, $password, $role) {
@@ -112,26 +162,8 @@
             $stmt->close();
 
             return $user_deleted;
-        }
-
-        /* Obtener datos de usuario */
-        public function get_user_data($user_id) {
-            $sql = "select * from persona where id = ?";
-            $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("i", $user_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $stmt->close();
-            $row = $result->fetch_assoc();
-            
-            return $row;
-        }
-
-        public function get_roles() {
-            $sql = "select * from rol";
-            $result = $this->mysqli->query($sql);
-            return $result;
-        }
+        }       
+                
 
         public function get_rol_description($rol_id) {
             $sql = "select descripcion from rol where id = ?";
@@ -241,10 +273,10 @@
         }
 
         /* Establecer ubicación */
-        public function set_location($location) {
-            $sql = "call establecer_ubicacion(?, @ubicacion_establecida)";
+        public function set_location($location, $user_id) {
+            $sql = "call establecer_ubicacion(?, ?, @ubicacion_establecida)";
             $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("s", $location);
+            $stmt->bind_param("si", strtoupper($location), $user_id);
             $stmt->execute();
             $sql = "select @ubicacion_establecida";
             $stmt = $this->mysqli->prepare($sql);
@@ -256,16 +288,19 @@
             return $location_added;
         }
 
-        /* Obtener ubicación */
-        public function get_location() {
-            $sql = "select * from tmp_ubicacion";
+        public function update_location($location, $user_id) {
+            $sql = "call actualizar_ubicacion(?, ?, @ubicacion_actualizada)";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("si", strtoupper($location), $user_id);
+            $stmt->execute();
+            $sql = "select @ubicacion_actualizada";
             $stmt = $this->mysqli->prepare($sql);
             $stmt->execute();
-            $result = $stmt->get_result();
+            $stmt->bind_result($location_added);
+            $stmt->fetch();
             $stmt->close();
-            $row = $result->fetch_assoc();
-            
-            return $row;
+
+            return $location_added;
         }
 
         /* Agregar producto al inventario */
@@ -295,15 +330,7 @@
             $stmt->close();
 
             return $code_sum;
-        }
-
-        /* conteo por usuario en inventario */
-        public function get_all_count() {
-            $sql = "select * from inventario";
-            $result = $this->mysqli->query($sql);
-
-            return $result;
-        }
+        }        
 
         /* conteo por producto en inventario */
         public function get_count_by_code($code) {
@@ -328,29 +355,16 @@
             
             return $result;
         }
-
-        /* conteo por usuario en inventario con paginación */
-        public function get_rows_per_user($user_id, $index, $rows_per_page) {
-            $sql = "select * from inventario where id_usuario = ? order by id asc limit ?, ?";
+        
+        public function get_add_by_code_and_user($code, $user_id) {
+            $sql = "select * from producto_agregado where codigo = ? and id_usuario = ?";
             $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("iii", $user_id, $index, $rows_per_page);
+            $stmt->bind_param("si", $code, $user_id);
             $stmt->execute();
             $result = $stmt->get_result();
             $stmt->close();
             
             return $result;
-        }
-
-        public function get_user_codes_count($user_id) {
-            $sql = "select count(*) from inventario where id_usuario = ?";
-            $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("i", $user_id);
-            $stmt->execute();
-            $stmt->bind_result($codes_count);
-            $stmt->fetch();
-            $stmt->close();
-
-            return $codes_count;
         }
 
         /* Búsqueda de códigos similares */
@@ -365,30 +379,10 @@
             return $result;
         }
 
-        /* códigos agregados por usuario en inventario */
-        public function get_adds_by_user($user_id) {
-            $sql = "select * from producto_agregado where id_usuario = ?";
-            $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("i", $user_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $stmt->close();
-            
-            return $result;
-        }
-
         /* Codigos de artículos */
         public function get_codes() {
             $sql = "select * from producto order by linea asc";
             $result = $this->mysqli->query($sql);
-            return $result;
-        }
-
-        /* códigos agregados general */
-        public function get_codes_added() {
-            $sql = "select * from producto_agregado";
-            $result = $this->mysqli->query($sql);
-
             return $result;
         }
         
@@ -396,13 +390,25 @@
         public function get_user_name($user_id) {
             $sql = "select nombre from persona where id = ?";
             $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("s", $user_id);
+            $stmt->bind_param("i", $user_id);
             $stmt->execute();
             $stmt->bind_result($user_name);
             $stmt->fetch();
             $stmt->close();
 
             return $user_name;
+        }
+
+        public function get_user_id($user_name, $password) {
+            $sql = "select id from persona where usuario = ? and clave = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("ss", $user_name, hash('sha256', $password));
+            $stmt->execute();
+            $stmt->bind_result($user_id);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $user_id;
         }
 
         /* limpiar tablas de la base de datos */
@@ -532,33 +538,7 @@
             $stmt->close();
 
             return $add_deleted;
-        }
-
-        /* obtener conteo individual */
-        public function get_count_data($id) {
-            $sql = "select * from inventario where id = ?";
-            $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $stmt->close();
-            $row = $result->fetch_assoc();
-            
-            return $row;
-        }
-
-        /* obtener codigos agregados por usuario */
-        public function get_add_data($id) {
-            $sql = "select * from producto_agregado where id = ?";
-            $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $stmt->close();
-            $row = $result->fetch_assoc();
-            
-            return $row;
-        }
+        }        
 
         /* actualizar un conteo */
         public function update_count($user_id, $id_count, $quantity, $location) {

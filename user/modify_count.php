@@ -14,7 +14,7 @@
     $page = $_GET['page'];
     
     $connection = new Connection();
-    $count_data = $connection->get_count_data($id);
+    $count_data = $connection->get_row_by_id('inventario', $id);
     $user_name = $connection->get_user_name($count_data['id_usuario']);
 
     if(empty($count_data['modif_por'])) {

@@ -30,7 +30,7 @@
                             'Fecha conteo'));
     
     $connection = new Connection();
-    $codes_added = $connection->get_codes_added();
+    $codes_added = $connection->get_table('producto_agregado');
 
     while($row = $codes_added->fetch_assoc()) {
 
