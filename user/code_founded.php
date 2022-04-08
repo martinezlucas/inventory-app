@@ -47,7 +47,7 @@
 
     <main>        
         <h1 class="center-text">Detalle del producto</h1>
-        
+        <br>
         <div class="form soft-border">
             <p>Línea: <?php echo $code_data['linea']; ?></p>
             <br>

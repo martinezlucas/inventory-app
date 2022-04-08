@@ -46,7 +46,7 @@
                 <?php endif; ?>
                 <a href="user_counts.php" rel="noreferrer noopener" class="button center-text bg-green cl-white">Conteo por usuario</a>
                 <a href="user_adds.php" rel="noreferrer noopener" class="button center-text bg-green cl-white">Códigos agregados por usuario</a>
-                <a href="search.php" rel="noreferrer noopener" class="button center-text bg-green cl-white">Buscar producto</a>
+                <a href="search.php" rel="noreferrer noopener" class="button center-text bg-green cl-white">Buscar productos por ubicación</a>
                 <a href="search_product.php" rel="noreferrer noopener" class="button center-text bg-green cl-white">Contar producto</a>
             </nav>
         </div>

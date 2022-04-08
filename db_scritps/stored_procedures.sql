@@ -259,6 +259,7 @@ begin
 	start transaction;
 		
         delete from persona where id = var_id;
+        delete from ubicacion where id_usuario = var_id;
     
     if sql_error = false then
 		commit;

@@ -74,6 +74,16 @@
             return $counts;
         }
 
+        public function get_count_by_table($table_name) {
+            $sql = "select count(*) from {$table_name}";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->execute();
+            $stmt->bind_result($counts);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $counts;
+        }
 
         public function get_location_by_user($user_id) {
             $sql = "select codigo from ubicacion where id_usuario = ?";
@@ -99,6 +109,16 @@
             return $result;
         }
         ////////////////////////////////////////////////////////////////////        
+        public function get_added_count($code) {
+            $sql = "select * from producto_agregado where codigo = ? order by id asc";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("s", $code);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+            
+            return $result;
+        }
 
         /* crear usuarios */
         public function create_user($name, $user_name, $password, $role) {

@@ -7,11 +7,17 @@
     if(!isset($_SESSION['user_id'])) {
 
         header('location:../');
-    } else {
-
-        $connection = new Connection();
-
     }
+
+    if(isset($_GET['code'])) {
+        $code = $_GET['code'];
+    } else {
+        $code = "";
+    }
+
+    $connection = new Connection();
+    $location = $connection->get_location_by_user($_SESSION['user_id']);    
+    $connection->close();
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +39,7 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="../user/menu.php" class="navigation-option">Menú principal</a>
+                <a href="../user/search_product.php" class="navigation-option">Atrás</a>
                 <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
             </nav>
         </div>
@@ -46,13 +52,13 @@
 
         <form action="../server/add_count.php" method="POST" class="form soft-border">
             <label for="code">Código</label>
-            <input type="text" id="code" name="code" placeholder="Código" required>
+            <input type="text" id="code" name="code" placeholder="Código" value="<?php echo $code; ?>" required>
             <label for="quantity">Cantidad</label>
             <input type="number" id="quantity" name="quantity" placeholder="Cantidad" required>
             <label for="description">Descripción</label>
             <textarea name="description" id="description" cols="30" rows="2" required></textarea>
             <label for="location">Ubicación</label>            
-            <input type="text" name="location" id="location" required>
+            <input type="text" name="location" id="location" value="<?php echo $location; ?>" required>
             <input type="submit" name="add-count" value="Guardar">
 
         </form>        

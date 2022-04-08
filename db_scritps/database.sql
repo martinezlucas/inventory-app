@@ -108,7 +108,10 @@ engine = InnoDB;
 /* Ubicación temporar */
 create table ubicacion(
 	codigo varchar(32) not null,
-    id_usuario int not null
+    id_usuario int not null,
+    
+    constraint pk_ubicacion
+    primary key(id_usuario)
 )
 engine = InnoDB;
 

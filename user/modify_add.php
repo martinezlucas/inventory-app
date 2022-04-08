@@ -54,7 +54,7 @@
             </a>
             <nav class="navigation">
                 <?php if($page == "user_adds"): ?>
-                    <a href="user_counts.php" class="navigation-option">Atrás</a>
+                    <a href="user_adds.php" class="navigation-option">Atrás</a>
                 <?php else: ?>
                     <a href="codes_added.php" class="navigation-option">Atrás</a>
                 <?php endif; ?>

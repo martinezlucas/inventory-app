@@ -11,12 +11,9 @@
 
     } else {
 
-        $current_location = "error";
-
-        if(isset($_GET['current_location'])) {
-            $validate = new Validate();
-            $current_location = $validate->input($_GET['current_location']);
-        }
+        $user_id = $_SESSION['user_id'];
+        $connection = new Connection();
+        $location = $connection->get_location_by_user($user_id);
     }
 ?>
 
@@ -53,7 +50,7 @@
         <h1 class="center-text">Establecer ubicación</h1>
 
         <form action="../server/set_location.php" method="POST" class="form soft-border">
-            <input type="text" name="code" id="code" placeholder="Código de ubicación" value="<?php echo $current_location; ?>" required>            
+            <input type="text" name="code" id="code" placeholder="Código de ubicación" value="<?php echo $location; ?>" required>            
             <input type="submit" name="locate" value="Establecer">
         </form>
     </main>

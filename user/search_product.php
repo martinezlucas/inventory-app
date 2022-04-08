@@ -13,15 +13,10 @@
     } else {
 
         $connection = new Connection();
-        $last_code_counted = $connection->get_last_code_counted_by_user($_SESSION['user_id']);
-        $last_add = $connection->get_last_add_by_user($_SESSION['user_id']);
-        $location_data = $connection->get_location();
-
-        if(empty($location_data)) {
-            $location = "none";
-        } else {
-            $location = $location_data['codigo'];
-        }
+        $user_id = $_SESSION['user_id'];
+        $last_code_counted = $connection->get_last_code_counted_by_user($user_id);
+        $last_add = $connection->get_last_add_by_user($user_id);
+        $location = $connection->get_location_by_user($user_id);
 
         if(empty($last_add)) {
             $add_code = "";
@@ -119,7 +114,7 @@
         <div class="soft-border info" id="code-counted-div">
             <p>Ubicación seleccionada: <span><?php echo $location; ?></span></p>
             <br>
-            <a href="locate.php?current_location=<?php echo urlencode($location); ?>" class="button soft-border cl-white bg-blue" style="width: 100%;">Establecer ubicación</a>
+            <a href="locate.php" class="button soft-border cl-white bg-blue" style="width: 100%;">Establecer ubicación</a>
         </div>
 
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="form soft-border">
@@ -133,7 +128,7 @@
             <br>
             <?php if(!$empty_string): ?>
                 
-                <a href="add_product.php" class="button block-button bg-green cl-white">Agregar al conteo</a>
+                <a href="add_product.php?code=<?php echo $code; ?>" class="button block-button bg-green cl-white">Agregar al conteo</a>
 
                 <?php if(!empty($similar_codes)): ?>
                     <br>
@@ -145,7 +140,7 @@
                             <p>Marca: <?php echo $row['marca']; ?></p>
                             <p>Descripcion: <?php echo $row['descripcion']; ?></p>
                             <br>
-                            <a href="count.php?code=<?php echo urlencode($row['codigo']); ?>&location=<?php echo $location; ?>&page=search" class="button block-button soft-border cl-white bg-blue">Contar</a>
+                            <a href="count.php?code=<?php echo urlencode($row['codigo']); ?>&page=search" class="button block-button soft-border cl-white bg-blue">Contar</a>
                         </div>
                     <?php endwhile; ?>
                 <?php endif; ?>                

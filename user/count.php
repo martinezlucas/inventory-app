@@ -11,10 +11,12 @@
 
         $code = $_GET['code'];
         $page = $_GET['page'];
-        $location = $_GET['location'];
         $connection = new Connection();
+
         $code_data = $connection->get_code_data($code);
         $sum_of_code = $connection->get_sum_of_code($code);
+        $location = $connection->get_location_by_user($_SESSION['user_id']);
+
         $connection->close();    
         
         if(empty($sum_of_code)) {
@@ -57,6 +59,7 @@
 
     <main>        
         <h1 class="center-text">Contar producto</h1>
+        <br>
         <form action="../server/save_count.php" id="sent-form" method="POST" class="form soft-border">
             <p>Línea: <?php echo $code_data['linea']; ?></p>
             <br>

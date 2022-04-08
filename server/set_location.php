@@ -1,6 +1,6 @@
 <?php
 
-    require "connection.php";
+    require 'connection.php';
     require 'validate.php';
 
     session_start();
@@ -8,6 +8,7 @@
     if(!isset($_SESSION['user_id'])) {
 
         header('location:../');
+        die();
 
     } else {
 
@@ -16,10 +17,10 @@
             $connection = new Connection();
             $validate = new Validate();
             
-            //$user = $_SESSION['user_id'];
-            $code = $validate->input($_POST['code']); 
+            $user_id = $_SESSION['user_id'];
+            $location = $validate->input($_POST['code']); 
 
-            $code_located = $connection->set_location(strtoupper($code));
+            $code_located = $connection->update_location($location, $user_id);
 
             $connection->close();
 

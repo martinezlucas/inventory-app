@@ -1,44 +1,24 @@
 <?php
 
     require '../server/connection.php';
+    require '../server/validate.php';
 
     session_start();
     
     if(!isset($_SESSION['user_id'])) {
 
         header('location:../');
+        die();
+
     } else {
-
-        $connection = new Connection();
-        $last_code_counted = $connection->get_last_code_counted_by_user($_SESSION['user_id']);
-        $last_add = $connection->get_last_add_by_user($_SESSION['user_id']);
-        $location_data = $connection->get_location();
-
-        if(empty($location_data)) {
-            $location = "none";
-        } else {
-            $location = $location_data['codigo'];
-        }
-
-        if(empty($last_add)) {
-            $add_code = "";
-            $add_quantity = "";
-        } else {
-            $add_code = $last_add['codigo'];
-            $add_quantity = $last_add['cantidad'];
-        }
-
-        if(empty($last_code_counted)) {
-            $counted_code = "";
-            $counted_quantity = "";
-        } else {
-            $counted_code = $last_code_counted['codigo_producto'];
-            $counted_quantity = $last_code_counted['cantidad'];
-        }
+               
 
         if(isset($_POST['search'])) {             
             
-            $code = trim($connection->get_connection()->real_escape_string($_POST['code']));            
+            $connection = new Connection();
+            $validate = new Validate();
+
+            $code = htmlspecialchars_decode( $validate->input($_POST['code']));
 
             $error = null;
             
@@ -53,15 +33,16 @@
                 if($code_count == 0) {
 
                     $error = "No se encuentra el código: " . $code;
+                    $connection->close();
                     
                 } else {
-    
+                    
+                    $connection->close();
                     header('location:../user/code_founded.php?code=' . urlencode($code));
+                    die();
                 }
             }
-        }
-
-        $connection->close();
+        }        
     }
 ?>
 
@@ -95,8 +76,8 @@
     </header>
 
     <main>        
-        <h1 class="center-text">Buscar producto</h1>
-
+        <h1 class="center-text">Buscar producto por ubicación</h1>
+        <br>
         <form method="POST" class="form soft-border">
             <input type="text" name="code" id="code" placeholder="Código" required>            
             <input type="submit" name="search" value="Buscar">
