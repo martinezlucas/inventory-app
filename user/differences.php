@@ -118,6 +118,7 @@
                         if(!empty($sum_of_code)) {
 
                             $difference = floatval($sum_of_code) - (floatval($code_data['stock_actual']) - floatval($code_data['comprometido']));
+
                         } else {
 
                             $difference = "Sin contar";
@@ -128,7 +129,6 @@
                     <td style="width: 20rem;"><?php echo $code_data['descripcion']; ?></td>
                     <td><?php echo $code_data['tipo']; ?></td>
                     <td><?php echo $code_data['marca']; ?></td>
-                    <td><?php echo $code_data['referencia']; ?></td>
                     <td><?php echo $code_data['almacen']; ?></td>
                     <td><?php echo $code_data['comprometido']; ?></td>
                     <td><?php echo $code_data['stock_actual']; ?></td>
@@ -147,10 +147,10 @@
                         if(!empty($sum_of_code)) {
                             $difference = floatval($sum_of_code) - (floatval($row['stock_actual']) - floatval($row['comprometido']));
                         } else {
-                            $difference = "Sin contar";
+                            $difference = 'Sin contar';
                         }
 
-                        if($difference != 0):
+                        if($difference != 0 || $difference == 'Sin contar'):
                 ?>
                 <tr>
                     <td><?php echo $row['linea']; ?></td>
@@ -173,10 +173,10 @@
                 <?php
                         endif;  
                     endwhile; 
-                    $codes->free();
-                    $connection->close();
+                    $codes->free();                    
                 ?>
             <?php endif; ?>
+            <?php $connection->close(); ?>
         </table> 
         <br>
         <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
