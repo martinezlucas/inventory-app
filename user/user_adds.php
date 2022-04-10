@@ -75,8 +75,8 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="menu.php" class="navigation-option">Atrás</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="menu.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
@@ -86,10 +86,12 @@
         <br>
         <h2 class="center-text">Usuario: <?php echo $user_name; ?></h2>
 
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search flex-center">
             <input type="text" name="code" id="code" placeholder="Buscar código" required>
             <input type="submit" name="search" value="&#128269;">
         </form>
+
+        <br>
 
         <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') : ?>
             <?php if (!empty($error)) : ?>
@@ -106,7 +108,7 @@
                         <p>Ubicación: <?php echo $row['ubicacion']; ?></p>
                         <p>Registrado: <?php echo $row['registrado']; ?></p>
                         <p>Modificado: <?php echo $row['modificado']; ?></p>
-
+                        <br>
                         <div class="card-menu">
                             <a href="modify_add.php?id=<?php echo $row['id']; ?>&page=user_adds" class="button soft-border cl-white bg-green">Modificar</a>
                             <button id="delete-button" class="delete-button" onclick="deleteAdd(<?php echo $row['id']; ?>, 'user_adds')" style="display: inline;">Eliminar conteo</button>
@@ -131,7 +133,7 @@
                     <p>Ubicación: <?php echo $row['ubicacion']; ?></p>
                     <p>Registrado: <?php echo $row['registrado']; ?></p>
                     <p>Modificado: <?php echo $row['modificado']; ?></p>
-
+                    <br>
                     <div class="card-menu">
                         <a href="modify_add.php?id=<?php echo $row['id']; ?>&page=user_adds" class="button soft-border cl-white bg-green">Modificar</a>
                         <button id="delete-button" class="delete-button" onclick="deleteAdd(<?php echo $row['id']; ?>, 'user_adds')" style="display: inline;">Eliminar conteo</button>
@@ -143,7 +145,6 @@
             ?>
 
         <?php endif; ?>
-        <br>  
         
         <?php $connection->close(); ?>
 

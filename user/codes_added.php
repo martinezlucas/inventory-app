@@ -78,9 +78,9 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="menu.php" class="navigation-option">Atrás</a>
-                <a href="../server/download_codes_added.php" class="navigation-option">Descargar tabla</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="menu.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../server/download_codes_added.php" class="navigation-option cl-black">Descargar tabla</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
@@ -88,7 +88,8 @@
     <main>
                
        <h1 class="center-text hidden-block">Códigos agregados general</h1>
-       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-block">
+       <br>
+       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
             <input type="text" name="code" id="code" placeholder="Buscar código" required>            
             <input type="submit" name="search" value="&#128269;">
         </form>
@@ -134,6 +135,8 @@
                         <td><?php echo $row['registrado']; ?></td>
                         <td><?php echo $modified_by; ?></td>
                         <td><?php echo $row['modificado']; ?></td>
+                        <td><a href="modify_add.php?id=<?php echo $row['id']; ?>&page=codes_added" class="button-table">Modificar</a></td>
+                        <td><button id="delete-button" onclick="deleteAdd(<?php echo $row['id']; ?>, 'codes_added')">Eliminar</button></td>
                     </tr>
 
                     <?php 
@@ -166,7 +169,7 @@
                     <td><?php echo $modified_by; ?></td>
                     <td><?php echo $row['modificado']; ?></td>
                     <td><a href="modify_add.php?id=<?php echo $row['id']; ?>&page=codes_added" class="button-table">Modificar</a></td>
-                    <td><button id="delete-button" onclick="deleteAdd(<?php echo $row['id']; ?>, 'codes_added')">Eliminar conteo</button></td>
+                    <td><button id="delete-button" onclick="deleteAdd(<?php echo $row['id']; ?>, 'codes_added')">Eliminar</button></td>
                 </tr>
 
                 <?php 
@@ -180,7 +183,9 @@
        <?php $pagination->show_buttons(); ?>
 
        <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
-            <a href="codes_added.php" rel="noreferrer noopener" class="pagination button soft-border hidden-block">Reiniciar</a>
+            <div class="hidden-flex">
+                <a href="codes_added.php" rel="noreferrer noopener" class="button border cl-black">Reiniciar</a>
+            </div>
         <?php endif; ?>
     </main>
     <script src="../js/confirm.js"></script>

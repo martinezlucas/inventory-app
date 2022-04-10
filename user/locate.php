@@ -40,15 +40,15 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="../user/search_product.php" class="navigation-option">Atrás</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="../user/search_product.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
     <main>        
         <h1 class="center-text">Establecer ubicación</h1>
-
+        <br>
         <form action="../server/set_location.php" method="POST" class="form soft-border">
             <input type="text" name="code" id="code" placeholder="Código de ubicación" value="<?php echo $location; ?>" required>            
             <input type="submit" name="locate" value="Establecer">

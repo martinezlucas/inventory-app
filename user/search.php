@@ -69,8 +69,8 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="../user/menu.php" class="navigation-option">Menú principal</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="../user/menu.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>

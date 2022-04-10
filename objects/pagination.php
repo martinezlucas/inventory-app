@@ -8,7 +8,7 @@
         private $total_pages;
         private $previous_page;
         private $next_page;
-        private $div_style = "soft-border pagination";
+        private $div_style = "pagination";
 
         public function set_rows_per_page($rows_per_page) {
             $this->rows_per_page = $rows_per_page;
@@ -20,7 +20,7 @@
 
         public function set_buttons_hidden($hidden) {
             if($hidden) {
-                $this->div_style .= " hidden-block";
+                $this->div_style = "hidden-flex";
             }
         }
 
@@ -92,13 +92,14 @@
         public function show_buttons() {
 
             if($_SERVER['REQUEST_METHOD'] != 'POST' && $this->total_pages > 1) {
-                
                 echo "<div class='{$this->div_style}'>";
-                echo "<a href='?page_number=1' rel='noreferrer noopener' class='button soft-border'><<</a>";
-                echo "<a href='?page_number=" . $this->previous_page. "' rel='noreferrer noopener' class='button soft-border'><</a>";
-                echo "<a href='?page_number=" . $this->next_page . "' rel='noreferrer noopener' class='button soft-border'>></a>";
-                echo "<a href='?page_number=" . $this->total_pages . "' rel='noreferrer noopener' class='button soft-border'>>></a>";
-                echo "</div>";
+                echo "  <div class='soft-border pagination-menu'>";
+                echo "      <a href='?page_number=1' rel='noreferrer noopener' class='button border cl-black inline-block'><<</a>";
+                echo "      <a href='?page_number=" . $this->previous_page. "' rel='noreferrer noopener' class='button border cl-black inline-block'><</a>";
+                echo "      <a href='?page_number=" . $this->next_page . "' rel='noreferrer noopener' class='button border cl-black inline-block'>></a>";
+                echo "      <a href='?page_number=" . $this->total_pages . "' rel='noreferrer noopener' class='button border cl-black inline-block'>>></a>";
+                echo "  </div>";
+                echo "<div>";
             }
         }
     }

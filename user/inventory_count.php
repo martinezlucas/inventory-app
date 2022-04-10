@@ -80,16 +80,17 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="menu.php" rel="noreferrer noopener" class="navigation-option">Atrás</a>
-                <a href="../server/download_count.php" rel="noreferrer noopener" class="navigation-option">Descargar tabla</a>
-                <a href="../server/logout.php" rel="noreferrer noopener" class="navigation-option">Cerrar sesión</a>
+                <a href="menu.php" rel="noreferrer noopener" class="navigation-option cl-black">Atrás</a>
+                <a href="../server/download_count.php" rel="noreferrer noopener" class="navigation-option cl-black">Descargar tabla</a>
+                <a href="../server/logout.php" rel="noreferrer noopener" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
     <main>               
        <h1 class="center-text hidden-block">Conteo general</h1>
-       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-block">
+       <br>
+       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
             <input type="text" name="code" id="code" placeholder="Buscar código" required>            
             <input type="submit" name="search" value="&#128269;">
         </form>
@@ -176,11 +177,12 @@
        </table> 
 
        <?php $pagination->show_buttons(); ?>
-
-       <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
-            <a href="inventory_count.php" rel="noreferrer noopener" class="pagination button soft-border hidden-block">Reiniciar</a>
+       <br>
+        <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
+            <div class="hidden-flex">
+                <a href="codes_table.php" rel="noreferrer noopener" class="button border cl-black">Reiniciar</a>
+            </div>
         <?php endif; ?>
-
     </main>
 </body>
 </html>

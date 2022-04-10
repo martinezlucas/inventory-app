@@ -74,8 +74,8 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="menu.php" class="navigation-option">Atrás</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="menu.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
@@ -86,7 +86,7 @@
         <br>
         <h2 class="center-text">Usuario: <?php echo $user_name; ?></h2>
 
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search flex-center">
             <input type="text" name="code" id="code" placeholder="Buscar código" required>
             <input type="submit" name="search" value="&#128269;">
         </form>
@@ -106,7 +106,9 @@
                         <p>Código: <?php echo $row['codigo_producto']; ?></p>
                         <p>Cantidad: <?php echo $row['cantidad']; ?></p>
                         <p>Ubicación: <?php echo $row['ubicacion']; ?></p>
-                        <p>registrado: <?php echo $row['registrado']; ?></p>
+                        <p>Registrado: <?php echo $row['registrado']; ?></p>
+                        <p>Modificado: <?php echo $row['modificado']; ?></p>
+                        <br>
                         <div class="card-menu">
                             <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="button soft-border cl-white bg-green">Modificar</a>
                             <button id="delete-button" class="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $row['codigo_producto']; ?>', 'user_counts')" style="display: inline;">Eliminar conteo</button>
@@ -123,11 +125,12 @@
 
             <?php while ($row = $rows_per_user->fetch_assoc()) : ?>
                 <div class="soft-border card">
-                    <p>ID: <?php echo $row['id']; ?></p>
-                    <p>Código: <?php echo $row['codigo_producto']; ?></p>
-                    <p>Cantidad: <?php echo $row['cantidad']; ?></p>
-                    <p>Ubicación: <?php echo $row['ubicacion']; ?></p>
-                    <p>registrado: <?php echo $row['registrado']; ?></p>
+                    <p>ID: <?php echo $row['id']; ?></p>                    
+                    <p>Código: <?php echo $row['codigo_producto']; ?></p>                    
+                    <p>Cantidad: <?php echo $row['cantidad']; ?></p>                    
+                    <p>Ubicación: <?php echo $row['ubicacion']; ?></p>                    
+                    <p>registrado: <?php echo $row['registrado']; ?></p>                    
+                    <p>Modificado: <?php echo $row['modificado']; ?></p>
                     <br>
                     <div class="card-menu">
                         <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="button soft-border cl-white bg-green">Modificar</a>
@@ -139,15 +142,14 @@
                 $rows_per_user->free();
             ?>
 
-        <?php endif; ?>
-        <br>
+        <?php endif; ?>       
 
         <?php $connection->close(); ?>
 
         <?php $pagination->show_buttons(); ?>
 
         <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') : ?>
-            <a href="user_counts.php" rel="noreferrer noopener" class="center-button soft-border">Reiniciar</a>
+            <a href="user_counts.php" rel="noreferrer noopener" class="center-button soft-border cl-black">Reiniciar</a>
         <?php endif; ?>
     </main>
     <script src="../js/confirm.js"></script>

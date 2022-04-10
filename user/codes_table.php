@@ -81,17 +81,19 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="../user/menu.php" rel="noreferrer noopener" class="navigation-option">Atrás</a>
-                <a href="load_data.php" rel="noreferrer noopener" class="navigation-option">Nuevo inventario</a>
-                <a href="../server/download_inventory.php" rel="noreferrer noopener" class="navigation-option">Descargar tabla</a>
-                <a href="../server/logout.php" rel="noreferrer noopener" class="navigation-option">Cerrar sesión</a>
+                <a href="../user/menu.php" rel="noreferrer noopener" class="navigation-option cl-black">Atrás</a>
+                <a href="load_data.php" rel="noreferrer noopener" class="navigation-option cl-black">Nuevo inventario</a>
+                <a href="../server/download_inventory.php" rel="noreferrer noopener" class="navigation-option cl-black">Descargar tabla</a>
+                <a href="../server/logout.php" rel="noreferrer noopener" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
     <main>               
         <h1 class="center-text hidden-block">Códigos subidos a la base de datos</h1>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-block">
+        <br>
+        <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
             <input type="text" name="code" id="code" placeholder="Buscar código" required>            
             <input type="submit" name="search" value="&#128269;">
         </form>
@@ -108,10 +110,8 @@
             ?>
         </p>
         <br>
-       
-       <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
 
-       <table class="table hidden-table">           
+       <table class="hidden-table">           
            <tr>
                <th class="column-title">ID</th>
                <th class="column-title">Código</th>
@@ -198,9 +198,11 @@
         </table> 
         
         <?php $pagination->show_buttons(); ?>
-
+        <br>
         <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
-            <a href="codes_table.php" rel="noreferrer noopener" class="pagination button soft-border hidden-block">Reiniciar</a>
+            <div class="hidden-flex">
+                <a href="codes_table.php" rel="noreferrer noopener" class="button border cl-black">Reiniciar</a>
+            </div>
         <?php endif; ?>
     </main>
 </body>

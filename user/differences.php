@@ -70,22 +70,23 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="../user/menu.php" class="navigation-option">Menú principal</a>
-                <a href="load_data.php" class="navigation-option">Nuevo inventario</a>
-                <a href="../server/download_differences.php" class="navigation-option">Descargar tabla</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="../user/menu.php" class="navigation-option cl-black">Atrás</a>
+                <a href="load_data.php" class="navigation-option cl-black">Nuevo inventario</a>
+                <a href="../server/download_differences.php" class="navigation-option cl-black">Descargar tabla</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
     <main>
         <h1 class="center-text hidden-block">Diferencias del conteo</h1>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-block">
+        <br>
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
             <input type="text" name="code" id="code" placeholder="Buscar código" required>            
             <input type="submit" name="search" value="&#128269;">
         </form>
-        <br>       
         <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
+        <br>               
         <table class="table hidden-table">
             <tr>
                 <th class="column-title">ID</th>
@@ -176,7 +177,9 @@
         </table> 
         <br>
         <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
-            <a href="differences.php" rel="noreferrer noopener" class="pagination button soft-border hidden-block">Reiniciar</a>
+            <div class="hidden-flex">
+                <a href="differences.php" rel="noreferrer noopener" class="button border cl-black">Reiniciar</a>
+            </div>
         <?php endif; ?>
     </main>
 </body>

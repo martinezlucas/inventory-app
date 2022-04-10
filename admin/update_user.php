@@ -9,11 +9,13 @@
         if($_SESSION['user_rol'] != 1) {
 
             header('location:../');
+            die();
         }
 
     } else {
 
         header('location:../');
+        die();
     }
 
     $connection = new Connection();
@@ -34,16 +36,24 @@
 </head>
 <body>
     <header class="header">
-        <nav>
-            <a href="../user/menu.php" class="button bg-white">Menú principal</a>
-            <a href="../server/logout.php" class="button bg-white">Cerrar sesión</a>
-        </nav>
+        <div class="options">
+            <a href="#" class="options-button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+            <nav class="navigation">
+                <a href="../admin/user_administration.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
+            </nav>
+        </div>
     </header>
 
     <main>        
-        <h1 class="center-text">Actualizar usuario</h1>
-
-        <form action="../server/update_profile.php" class="form soft-border" method="POST">
+        <h1 class="center-text hidden-block">Actualizar usuario</h1>
+        <br>
+        <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
+        <form action="../server/update_profile.php" class="hidden-form soft-border" method="POST">
             <p>ID: <?php echo $user_data['id']; ?></p>
             <br>
             <input type="hidden" name="id-user" value="<?php echo $user_data['id']; ?>">

@@ -92,8 +92,8 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="../user/menu.php" class="navigation-option">Menú principal</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="../user/menu.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
@@ -114,7 +114,7 @@
         <div class="soft-border info" id="code-counted-div">
             <p>Ubicación seleccionada: <span><?php echo $location; ?></span></p>
             <br>
-            <a href="locate.php" class="button soft-border cl-white bg-blue" style="width: 100%;">Establecer ubicación</a>
+            <a href="locate.php" class="button border block cl-white bg-blue" style="width: 100%;">Establecer ubicación</a>
         </div>
 
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="form soft-border">

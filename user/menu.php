@@ -28,7 +28,7 @@
 <body>
     <header class="header">        
         <nav>
-            <a href="../server/logout.php" rel="noreferrer noopener" class="button btn-mn center-text bg-white">Cerrar sesión</a>
+            <a href="../server/logout.php" rel="noreferrer noopener" class="button btn-mn block bg-white cl-black">Cerrar sesión</a>
         </nav>
     </header>
 
@@ -38,18 +38,19 @@
         <div class="menu soft-border">
             <nav>                
                 <?php if($_SESSION['user_rol'] == 1): ?>
-                    <a href="codes_table.php" rel="noreferrer noopener" class="button center-text bg-blue cl-white">Códigos subidos a BD</a>
-                    <a href="inventory_count.php" rel="noreferrer noopener" class="button center-text bg-blue cl-white">Conteo general</a>
-                    <a href="differences.php" rel="noreferrer noopener" class="button center-text bg-blue cl-white">Diferencias del conteo</a>
-                    <a href="codes_added.php" rel="noreferrer noopener" class="button center-text bg-blue cl-white">Códigos agregados general</a>
-                    <a href="../admin/user_administration.php" rel="noreferrer noopener" class="button center-text bg-blue cl-white">Administrar usuarios</a>
+                    <a href="codes_table.php" rel="noreferrer noopener" class="button bg-blue cl-white">Códigos subidos a BD</a>
+                    <a href="inventory_count.php" rel="noreferrer noopener" class="button bg-blue cl-white">Conteo general</a>
+                    <a href="differences.php" rel="noreferrer noopener" class="button bg-blue cl-white">Diferencias del conteo</a>
+                    <a href="codes_added.php" rel="noreferrer noopener" class="button bg-blue cl-white">Códigos agregados general</a>
+                    <a href="../admin/user_administration.php" rel="noreferrer noopener" class="button bg-blue cl-white">Administrar usuarios</a>
                 <?php endif; ?>
-                <a href="user_counts.php" rel="noreferrer noopener" class="button center-text bg-green cl-white">Conteo por usuario</a>
-                <a href="user_adds.php" rel="noreferrer noopener" class="button center-text bg-green cl-white">Códigos agregados por usuario</a>
-                <a href="search.php" rel="noreferrer noopener" class="button center-text bg-green cl-white">Buscar productos por ubicación</a>
-                <a href="search_product.php" rel="noreferrer noopener" class="button center-text bg-green cl-white">Contar producto</a>
+                <a href="user_counts.php" rel="noreferrer noopener" class="button bg-green cl-white">Conteo por usuario</a>
+                <a href="user_adds.php" rel="noreferrer noopener" class="button bg-green cl-white">Códigos agregados por usuario</a>
+                <a href="search.php" rel="noreferrer noopener" class="button bg-green cl-white">Productos por ubicación</a>
+                <a href="search_product.php" rel="noreferrer noopener" class="button bg-green cl-white">Contar producto</a>
             </nav>
         </div>
+        <br>
     </main>
 </body>
 </html>

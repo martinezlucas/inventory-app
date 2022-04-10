@@ -221,6 +221,18 @@
             return $codes_count;
         }
 
+        /* Registros de usuarios */ 
+        public function get_users_count() {
+            $sql = "select count(*) from persona";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->execute();
+            $stmt->bind_result($codes_count);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $codes_count;
+        }
+
         /* Paginación de registros */
         public function get_rows_per_page($index, $number_of_rows, $table, $column) {
             $sql = "select * from {$table} order by {$column} asc limit ?, ?";
@@ -262,6 +274,18 @@
             $stmt->close();
 
             return $code_count;
+        }
+
+        public function find_user($user) {
+            $sql = "select count(*) from persona where nombre = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("s", $user);
+            $stmt->execute();
+            $stmt->bind_result($user_count);
+            $stmt->fetch();
+            $stmt->close();
+
+            return $user_count;
         }
 
         public function get_code_data($code) {
@@ -357,6 +381,18 @@
             $sql = "select * from inventario where codigo_producto = ?";
             $stmt = $this->mysqli->prepare($sql);
             $stmt->bind_param("s", $code);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+            
+            return $result;
+        }
+
+        /* conteo por producto en inventario */
+        public function get_users_by_name($user) {
+            $sql = "select * from persona where nombre = ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("s", $user);
             $stmt->execute();
             $result = $stmt->get_result();
             $stmt->close();

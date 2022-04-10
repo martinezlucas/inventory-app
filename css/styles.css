@@ -18,7 +18,6 @@ body {
 
 a {
     text-decoration: none;
-    color: black;
 }
 
 img {
@@ -41,16 +40,6 @@ h2 {
     text-align: center;
 }
 
-.button {
-    padding: 1rem 1.5rem;
-    display: inline-block;
-    text-align: center;
-    text-transform: capitalize;
-    font-weight: bold;
-    border-radius: 1.8rem;
-    background-color: white;
-}
-
 .bg-white {
     background-color: white;
 }
@@ -66,6 +55,37 @@ h2 {
 .cl-white {
     color: white;
 }
+
+.cl-black {
+    color: black;
+}
+
+.block {
+    display: block;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    padding: 1rem 1.5rem;
+    text-align: center;
+    text-transform: capitalize;
+    font-weight: bold;
+    border-radius: 1.8rem;
+}
+
+.border {
+    border: 0.1rem solid black;
+}
+
 .soft-border {
     border: 0.1rem solid black;
     border-radius: 0.5rem;
@@ -148,64 +168,6 @@ h2 {
     height: 8rem;
 }
 
-/* Formulario */
-.form {    
-    padding: 1rem;
-    width: 96%;
-    margin: auto;
-}
-
-.form label {
-    display: block;
-    margin-bottom: 0.3rem;
-}
-
-.form h2 {
-    margin-bottom: 1rem;    
-}
-
-.form select {
-    width: 100%;
-    margin-bottom: 1rem;
-    padding: 1rem;
-}
-
-.form input,
-.form textarea,
-.form button {
-    width: 100%;
-}
-
-.form svg {
-    display: block;
-    margin: 1rem auto;
-}
-
-.form input:not([type="submit"]),
-.form textarea {
-    margin-bottom: 1rem;
-    padding: 1rem 0.5rem;
-}
-
-.form input[type="submit"],
-.form button {
-    padding: 1rem 0;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.form textarea {
-    margin-bottom: 1rem;
-}
-
-@media(min-width: 769px) {
-
-    .form {
-        width: 40rem;       
-        margin: auto;
-    }
-}
-
 /* Header */
 .header {
     background-color: blue;
@@ -216,14 +178,6 @@ h2 {
 
 .header a:last-of-type {
     margin-bottom: 0;
-}
-
-@media(min-width: 769px) {
-    
-    .header a {
-        margin-bottom: 0;        
-        width: fit-content;
-    }
 }
 
 /* botón responsive */
@@ -257,13 +211,13 @@ h2 {
 .navigation {
     position: absolute;
     right: 0;
-    min-width: 16rem;
+    min-width: 20rem;
     display: none;
 }
 
 .navigation-option {
     text-transform: capitalize;    
-    padding: 1rem 1.5rem;
+    padding: 1rem 2rem;
     display: block;
     text-align: center;    
     background-color: white;
@@ -328,45 +282,112 @@ h2 {
     }       
 }
 
-/* Tabla */
-.table {
-    border-collapse: collapse;
-    max-width: 96%;
-    margin: auto;    
+/* Formulario */
+.form {    
+    padding: 1rem;
+    width: 96%;
+    margin: auto;
+}
+
+.form label,
+.hidden-form label {
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.form h2 {
+    margin-bottom: 1rem;    
+}
+
+.form select,
+.hidden-form select {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.form input,
+.form textarea,
+.form button,
+.hidden-form input {
+    width: 100%;
+}
+
+.form svg {
+    display: block;
+    margin: 1rem auto;
+}
+
+.form input:not([type="submit"]),
+.form textarea,
+.hidden-form input:not([type="submit"]) {
+    margin-bottom: 1rem;
+    padding: 1rem 0.5rem;
+}
+
+.form input[type="submit"],
+.form button,
+.hidden-form input[type="submit"] {
+    padding: 1rem 0;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.form textarea {
+    margin-bottom: 1rem;
 }
 
 .hidden-table,
-.hidden-block {
+.hidden-block,
+.hidden-flex,
+.hidden-form {
     display: none;
 }
 
-.table th,
-.table td  {    
-    border: 0.1rem solid black;
-    padding: 0.5rem;
-}
-
-.table td {
-    font-size: 1.4rem;
-}
-
 @media(min-width: 769px) {
-    
-    .table {        
-        margin: auto;
-        width: auto;
-    }
 
     .hidden-table {
         display: table;
+        margin: auto;
+        width: auto;
+        border-collapse: collapse;
+        max-width: 96%;
+    }
+
+    .hidden-table th,
+    .hidden-table td  {    
+        border: 0.1rem solid black;
+        padding: 0.5rem;
+    }
+
+    .hidden-table td {
+        font-size: 1.4rem;
     }
 
     .hidden-block {
         display: block;
     }
+
+    .hidden-flex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hidden-form {
+        display: block;
+        padding: 1rem;
+        width: 40rem;       
+        margin: auto;
+    }
     
     .hidden-message {
         display: none;
+    }
+
+    .form {
+        width: 40rem;       
+        margin: auto;
     }
 }
 
@@ -400,7 +421,12 @@ h2 {
 }
 
 .pagination {
-    width: fit-content;
+    display: flex;    
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-menu {
     margin: 1rem auto;
     padding: 1rem;
 }
@@ -410,21 +436,18 @@ h2 {
     margin: auto;
 }
 
-.pagination a,
+.pagination-menu a,
 .card-menu a {
     margin-right: 0.5rem;
 }
 
-.pagination a:last-of-type {
+.pagination-menu a:last-of-type {
     margin-right: 0;
 }
 
 .search {    
     padding: 1rem;
-    margin: 1rem;
     border-radius: 0.5rem;
-    width: fit-content;
-    margin: 1rem auto 0 auto;
 }
 
 .search input {
@@ -433,6 +456,7 @@ h2 {
 
 .search input[type="text"] {
     width: auto;
+    margin-right: 0.5rem;
 }
 
 @media(min-width: 769px) {

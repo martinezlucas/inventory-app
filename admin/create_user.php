@@ -1,6 +1,7 @@
 <?php
 
     require '../server/connection.php';
+    require '../objects/pagination.php';
 
     session_start();
     
@@ -19,7 +20,7 @@
     }
 
     $connection = new Connection();
-    $roles = $connection->get_table('rol');
+    $roles = $connection->get_table('rol');    
 ?>
 
 <!DOCTYPE html>
@@ -41,16 +42,16 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="user_administration.php" class="navigation-option">Atrás</a>
-                <a href="../user/menu.php" class="navigation-option">Menú principal</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="user_administration.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../user/menu.php" class="navigation-option cl-black">Menú principal</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
     <main>        
         <h1 class="center-text">Creación de usuarios</h1>
-
+        <br>
         <form action="../server/create_profile.php" class="form soft-border" method="POST">
             <label for="name">Nombre</label>
             <input type="text" id="name" name="name" placeholder="Nombre" required>
