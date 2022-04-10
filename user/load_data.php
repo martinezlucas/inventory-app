@@ -30,7 +30,8 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Cargar códigos</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -38,15 +39,15 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="codes_table.php" class="navigation-option">Atrás</a>
-                <a href="../user/menu.php" class="navigation-option">Menú principal</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="codes_table.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../user/menu.php" class="navigation-option cl-black">Menú principal</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
-    <main>        
-        <h1 class="center-text">Cargar códigos para nuevo conteo</h1>
+    <main>
+        <br>                
         <h2 class="center-text">Advertencia</h2>
         <p class="center-text">
             Esta acción eliminará los registros existentes en la base de datos, 

@@ -70,6 +70,10 @@
 
 <body>
     <header class="header">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
+            <input type="text" name="user" id="user" placeholder="Buscar usuario" required>
+            <input type="submit" name="search" value="&#128269;">
+        </form>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -86,21 +90,19 @@
     <main>
         <h1 class="center-text hidden-block">Administración de usuarios</h1>
         <br>
-        <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
-            <input type="text" name="user" id="user" placeholder="Buscar usuario" required>
-            <input type="submit" name="search" value="&#128269;">
-        </form>
-        <br>
-        <table class="table hidden-table">
-            <tr>
-                <th class="column-title">ID</th>
-                <th class="column-title">Nombre</th>
-                <th class="column-title">Usuario</th>
-                <th class="column-title">Rol</th>
-                <th class="column-title">Registrado</th>
-                <th class="column-title">Actualizado</th>
-            </tr>
+        <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>                
+        <table class="hidden-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Usuario</th>
+                    <th>Rol</th>
+                    <th>Registrado</th>
+                    <th>Actualizado</th>
+                    <th colspan="2">Opciones</th>                    
+                </tr>
+            </thead>
 
             <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') : ?>
                 <?php if (!empty($error)) : ?>
@@ -108,8 +110,37 @@
                     <p class="center-text"><?php echo $error ?></p>
                     <br>
                 <?php else : ?>
+                    <tbody>
+                        <?php
+                            while ($row = $users_data->fetch_assoc()) :
+                            $rol_description = $connection->get_rol_description($row['rol']);
+                        ?>
+                            <tr>
+                                <td><?php echo $row['id']; ?></td>
+                                <td><?php echo $row['nombre']; ?></td>
+                                <td><?php echo $row['usuario']; ?></td>
+                                <td><?php echo $rol_description; ?></td>
+                                <td><?php echo $row['registrado']; ?></td>
+                                <td><?php echo $row['actualizado']; ?></td>
+
+                                <?php if ($row['id'] != $_SESSION['user_id']) : ?>
+                                    <td><a href="update_user.php?id=<?php echo $row['id']; ?>" class="button-table">Actualizar</a></td>
+                                <?php endif; ?>
+
+                                <?php if ($row['rol'] != 1) : ?>
+                                    <td><a href="delete_user.php?id=<?php echo $row['id']; ?>" class="button-table">Borrar</a></td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php
+                            endwhile;
+                            $users_data->free();                        
+                        ?>
+                    </tbody>                    
+                <?php endif; ?>
+            <?php else : ?>
+                <tbody>
                     <?php
-                        while ($row = $users_data->fetch_assoc()) :
+                        while ($row = $users_per_page->fetch_assoc()) :
                         $rol_description = $connection->get_rol_description($row['rol']);
                     ?>
                         <tr>
@@ -130,34 +161,9 @@
                         </tr>
                     <?php
                         endwhile;
-                        $users_data->free();                        
+                        $users_per_page->free();                    
                     ?>
-                <?php endif; ?>
-            <?php else : ?>
-                <?php
-                    while ($row = $users_per_page->fetch_assoc()) :
-                    $rol_description = $connection->get_rol_description($row['rol']);
-                ?>
-                    <tr>
-                        <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['nombre']; ?></td>
-                        <td><?php echo $row['usuario']; ?></td>
-                        <td><?php echo $rol_description; ?></td>
-                        <td><?php echo $row['registrado']; ?></td>
-                        <td><?php echo $row['actualizado']; ?></td>
-
-                        <?php if ($row['id'] != $_SESSION['user_id']) : ?>
-                            <td><a href="update_user.php?id=<?php echo $row['id']; ?>" class="button-table">Actualizar</a></td>
-                        <?php endif; ?>
-
-                        <?php if ($row['rol'] != 1) : ?>
-                            <td><a href="delete_user.php?id=<?php echo $row['id']; ?>" class="button-table">Borrar</a></td>
-                        <?php endif; ?>
-                    </tr>
-                <?php
-                    endwhile;
-                    $users_per_page->free();                    
-                ?>
+                </tbody>
             <?php endif; ?>            
             
         </table>

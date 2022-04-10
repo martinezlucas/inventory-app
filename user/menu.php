@@ -26,23 +26,28 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">        
+    <header class="header-menu">        
+        <h1 class="cl-white no-margin">Menú principal</h1>
         <nav>
             <a href="../server/logout.php" rel="noreferrer noopener" class="button btn-mn block bg-white cl-black">Cerrar sesión</a>
         </nav>
     </header>
 
-    <main>        
-        <h1 class="center-text">Menú principal</h1>
+    <main>                
         <br>
         <div class="menu soft-border">
             <nav>                
                 <?php if($_SESSION['user_rol'] == 1): ?>
-                    <a href="codes_table.php" rel="noreferrer noopener" class="button bg-blue cl-white">Códigos subidos a BD</a>
-                    <a href="inventory_count.php" rel="noreferrer noopener" class="button bg-blue cl-white">Conteo general</a>
-                    <a href="differences.php" rel="noreferrer noopener" class="button bg-blue cl-white">Diferencias del conteo</a>
-                    <a href="codes_added.php" rel="noreferrer noopener" class="button bg-blue cl-white">Códigos agregados general</a>
-                    <a href="../admin/user_administration.php" rel="noreferrer noopener" class="button bg-blue cl-white">Administrar usuarios</a>
+                    <p class="center-text hidden-message">Utilice una computadora de escritorio o portatil para acceder a las opciones de administrador</p>
+                    <br class="hidden-message">
+                    <div class="hidden-block">
+                        <a href="codes_table.php" rel="noreferrer noopener" class="button bg-blue cl-white">Tabla de artículos</a>
+                        <a href="inventory_count.php" rel="noreferrer noopener" class="button bg-blue cl-white">Conteo general</a>
+                        <a href="differences.php" rel="noreferrer noopener" class="button bg-blue cl-white">Diferencias del conteo</a>
+                        <a href="codes_added.php" rel="noreferrer noopener" class="button bg-blue cl-white">Códigos agregados general</a>
+                        <a href="../admin/user_administration.php" rel="noreferrer noopener" class="button bg-blue cl-white">Administrar usuarios</a>
+                        <br>
+                    </div>
                 <?php endif; ?>
                 <a href="user_counts.php" rel="noreferrer noopener" class="button bg-green cl-white">Conteo por usuario</a>
                 <a href="user_adds.php" rel="noreferrer noopener" class="button bg-green cl-white">Códigos agregados por usuario</a>

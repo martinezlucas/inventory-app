@@ -67,7 +67,8 @@
 </head>
 
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Códigos por usuario</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -82,8 +83,7 @@
     </header>
 
     <main>
-        <h1 class="center-text">Códigos agregados por usuario</h1>
-        <br>
+        <br>            
         <h2 class="center-text">Usuario: <?php echo $user_name; ?></h2>
 
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search flex-center">

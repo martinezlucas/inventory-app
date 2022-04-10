@@ -61,7 +61,8 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Productos por ubicación</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -75,8 +76,7 @@
         </div>
     </header>
 
-    <main>        
-        <h1 class="center-text">Buscar producto por ubicación</h1>
+    <main>                
         <br>
         <form method="POST" class="form soft-border">
             <input type="text" name="code" id="code" placeholder="Código" required>            

@@ -32,7 +32,8 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Establecer ubicación</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -47,7 +48,6 @@
     </header>
 
     <main>        
-        <h1 class="center-text">Establecer ubicación</h1>
         <br>
         <form action="../server/set_location.php" method="POST" class="form soft-border">
             <input type="text" name="code" id="code" placeholder="Código de ubicación" value="<?php echo $location; ?>" required>            

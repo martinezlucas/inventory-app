@@ -21,15 +21,22 @@
     $user_deleted = $connection->delete_user(intval($_GET['id']));
     $connection->close();
     
-    if($user_deleted == 0) {
+    if(empty($user_data)) {
 
-        $title = "No es posible borrar al usuario: " . $user_data['usuario'];
-        $message = "Al parecer el usuario que intenta borrar ha realizado acciones " . 
-                    "dentro de la base de datos por lo que no es posible borrar su perfil.";
+        header('location:user_administration.php');
+        die();
+
     } else {
+        if($user_deleted == 0) {
 
-        $title = "Se borró correctamente al usuario: " . $user_data['usuario'];
-        $message = "Perfil borrado con éxito.";
+            $title = "No es posible borrar al usuario: " . $user_data['usuario'];
+            $message = "Al parecer el usuario que intenta borrar ha realizado acciones " . 
+                        "dentro de la base de datos por lo que no es posible borrar su perfil.";
+        } else {
+    
+            $title = "Se borró correctamente al usuario: " . $user_data['usuario'];
+            $message = "Perfil borrado con éxito.";
+        }
     }
 ?>
 
@@ -44,16 +51,25 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">
-        <nav>
-            <a href="user_administration.php" class="button bg-white center-text">Atrás</a>
-            <a href="../server/logout.php" class="button bg-white center-text">Cerrar sesión</a>
-        </nav>
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Perfíl de usuario borrado</h1>
+        <div class="options">
+            <a href="#" class="options-button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+            <nav class="navigation">
+                <a href="user_administration.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
+            </nav>
+        </div>
     </header>
 
     <main>
-        <?php echo $user_deleted; ?>        
-        <h1 class="center-text"><?php echo $title; ?></h1>
+        <br>
+        <h2 class="center-text"><?php echo $title; ?></h2>
+        <br>
         <p class="center-text"><?php echo $message; ?></p>
     </main>
 </body>

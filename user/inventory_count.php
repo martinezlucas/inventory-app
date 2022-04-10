@@ -73,6 +73,12 @@
 </head>
 <body>
     <header class="header">
+        
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
+            <input type="text" name="code" id="code" placeholder="Buscar código" required>            
+            <input type="submit" name="search" value="&#128269;">
+        </form>
+
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -88,26 +94,24 @@
     </header>
 
     <main>               
-       <h1 class="center-text hidden-block">Conteo general</h1>
-       <br>
-       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
-            <input type="text" name="code" id="code" placeholder="Buscar código" required>            
-            <input type="submit" name="search" value="&#128269;">
-        </form>
+       <h1 class="center-text hidden-block">Conteo general</h1>       
         <br>
        <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
 
-       <table class="table hidden-table">           
-           <tr>
-               <th class="column-title">ID</th>
-               <th class="column-title">Código</th>
-               <th class="column-title">Cantidad</th>
-               <th class="column-title">Ubicación</th>
-               <th class="column-title">Contado por</th>
-               <th class="column-title">Fecha conteo</th>
-               <th class="column-title">Modificado por</th>
-               <th class="column-title">Fecha modificación</th>
-           </tr>
+       <table class="hidden-table">           
+           <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Cantidad</th>
+                    <th>Ubicación</th>
+                    <th>Contado por</th>
+                    <th>Fecha conteo</th>
+                    <th>Modificado por</th>
+                    <th>Fecha modificación</th>
+                    <th>Opciones</th>
+                </tr>
+           </thead>
 
            <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
                 <?php if(!empty($error)): ?>
@@ -116,9 +120,40 @@
                     <br>
 
                 <?php else: ?>
-                    
+                    <tbody>                    
+                        <?php 
+                            while($row = $code_counted->fetch_assoc()): 
+                                $user_name = $connection->get_user_name($row['id_usuario']);
+
+                                if(!empty($row['modif_por'])) {
+                                    $modified_by = $connection->get_user_name($row['id_usuario']);
+                                } else {
+                                    $modified_by = "";
+                                }
+                        ?>
+                        <tr>
+                            <td><?php echo $row['id']; ?></td>
+                            <td><?php echo $row['codigo_producto']; ?></td>
+                            <td><?php echo $row['cantidad']; ?></td>
+                            <td><?php echo $row['ubicacion']; ?></td>
+                            <td><?php echo $user_name; ?></td>
+                            <td><?php echo $row['registrado']; ?></td>
+                            <td><?php echo $modified_by; ?></td>
+                            <td><?php echo $row['modificado']; ?></td>
+                            <td><a href="count_details.php?code=<?php echo urlencode($row['codigo_producto']); ?>&page=inventory" rel="noreferrer noopener" class="button-table">Detalles conteo</a></td>
+                        </tr>
+
+                        <?php 
+                            endwhile; 
+                            $code_counted->free();
+                            $connection->close();
+                        ?>
+                    </tbody>
+                <?php endif; ?>
+           <?php else: ?>
+                <tbody>                
                     <?php 
-                        while($row = $code_counted->fetch_assoc()): 
+                        while($row = $inventory_per_page->fetch_assoc()): 
                             $user_name = $connection->get_user_name($row['id_usuario']);
 
                             if(!empty($row['modif_por'])) {
@@ -138,41 +173,12 @@
                         <td><?php echo $row['modificado']; ?></td>
                         <td><a href="count_details.php?code=<?php echo urlencode($row['codigo_producto']); ?>&page=inventory" rel="noreferrer noopener" class="button-table">Detalles conteo</a></td>
                     </tr>
-
                     <?php 
                         endwhile; 
-                        $code_counted->free();
+                        $inventory_per_page->free();
                         $connection->close();
                     ?>
-                <?php endif; ?>
-           <?php else: ?>
-
-                <?php 
-                    while($row = $inventory_per_page->fetch_assoc()): 
-                        $user_name = $connection->get_user_name($row['id_usuario']);
-
-                        if(!empty($row['modif_por'])) {
-                            $modified_by = $connection->get_user_name($row['id_usuario']);
-                        } else {
-                            $modified_by = "";
-                        }
-                ?>
-                <tr>
-                    <td><?php echo $row['id']; ?></td>
-                    <td><?php echo $row['codigo_producto']; ?></td>
-                    <td><?php echo $row['cantidad']; ?></td>
-                    <td><?php echo $row['ubicacion']; ?></td>
-                    <td><?php echo $user_name; ?></td>
-                    <td><?php echo $row['registrado']; ?></td>
-                    <td><?php echo $modified_by; ?></td>
-                    <td><?php echo $row['modificado']; ?></td>
-                    <td><a href="count_details.php?code=<?php echo urlencode($row['codigo_producto']); ?>&page=inventory" rel="noreferrer noopener" class="button-table">Detalles conteo</a></td>
-                </tr>
-                <?php 
-                    endwhile; 
-                    $inventory_per_page->free();
-                    $connection->close();
-                ?>
+                </tbody>
             <?php endif; ?>
        </table> 
 

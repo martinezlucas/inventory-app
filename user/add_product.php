@@ -31,7 +31,8 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Agregar producto</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -45,8 +46,7 @@
         </div>
     </header>
 
-    <main>        
-        <h1 class="center-text">Agregar producto</h1>
+    <main>               
 
         <br>
 

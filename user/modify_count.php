@@ -45,7 +45,8 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Actualizar conteo</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -54,19 +55,18 @@
             </a>
             <nav class="navigation">
                 <?php if($page == "user_counts"): ?>
-                    <a href="user_counts.php" class="navigation-option">Atrás</a>
+                    <a href="user_counts.php" class="navigation-option cl-black">Atrás</a>
                 <?php else: ?>
-                    <a href="count_details.php?code=<?php echo $count_data['codigo_producto']; ?>&page=<?php echo $page; ?>" class="navigation-option">Atrás</a>
+                    <a href="count_details.php?code=<?php echo $count_data['codigo_producto']; ?>&page=<?php echo $page; ?>" class="navigation-option cl-black">Atrás</a>
                 <?php endif; ?>
 
-                <a href="../user/menu.php" class="navigation-option">Menú principal</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="../user/menu.php" class="navigation-option cl-black">Menú principal</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
-    <main>        
-        <h1 class="center-text">Actualizar conteo</h1>
+    <main>                
         <br>
         <form action="../server/update_count.php" id="sent-form" method="POST" class="form soft-border">
             <p>ID: <?php echo $count_data['id']; ?></p>

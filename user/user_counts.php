@@ -66,7 +66,8 @@
 </head>
 
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Conteo por usuario</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -80,12 +81,9 @@
         </div>
     </header>
 
-    <main>
-
-        <h1 class="center-text">Conteo por usuario</h1>
+    <main>                
         <br>
         <h2 class="center-text">Usuario: <?php echo $user_name; ?></h2>
-
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search flex-center">
             <input type="text" name="code" id="code" placeholder="Buscar código" required>
             <input type="submit" name="search" value="&#128269;">

@@ -21,12 +21,13 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Conteo exitoso</h1>
         <a href="../server/logout.php" class="button bg-white">Cerrar sesión</a>
     </header>
 
     <main>
-        <h1 class="center-text">Conteo exitoso</h1>
+        <br>        
         <nav class="menu soft-border">
             <a href="search_product.php" class="button center-text bg-blue cl-white">Nuevo Conteo</a>
             <a href="menu.php" class="button center-text bg-blue cl-white">Menú principal</a>

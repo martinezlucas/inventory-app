@@ -53,7 +53,8 @@
 </head>
 
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Conteos por código</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -67,9 +68,7 @@
         </div>
     </header>
 
-    <main>
-
-        <h1 class="center-text <?php if($page != 'count') {echo 'hidden-block';} ?>">Conteos por código</h1>
+    <main>        
         <br>
         <?php if($page != 'count') : ?>
             <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
@@ -77,44 +76,48 @@
 
         <?php if($page != 'count' && $_SESSION['user_rol'] == 1): ?>
             <table class="hidden-table">
-                <tr>
-                    <th class="column-title">ID</th>
-                    <th class="column-title">Código</th>
-                    <th class="column-title">Cantidad</th>
-                    <th class="column-title">Ubicación</th>
-                    <th class="column-title">Contado por</th>
-                    <th class="column-title">Fecha conteo</th>
-                    <th class="column-title">Modificado por</th>
-                    <th class="column-title">Fecha modificación</th>
-                </tr>
-
-                <?php
-                while ($row = $count_by_code->fetch_assoc()) :
-                    $user_name = $connection->get_user_name($row['id_usuario']);
-
-                    if (!empty($row['modif_por'])) {
-                        $modified_by = $connection->get_user_name($row['modif_por']);
-                    } else {
-                        $modified_by = "";
-                    }
-                ?>
+                <thead>
                     <tr>
-                        <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['codigo_producto']; ?></td>
-                        <td><?php echo $row['cantidad']; ?></td>
-                        <td><?php echo $row['ubicacion']; ?></td>
-                        <td><?php echo $user_name; ?></td>
-                        <td><?php echo $row['registrado']; ?></td>
-                        <td><?php echo $modified_by; ?></td>
-                        <td><?php echo $row['modificado']; ?></td>                        
-                        <td><a href="modify_count.php?id=<?php echo urlencode($row['id']); ?>&page=<?php echo $page; ?>" class="button-table">Modificar</a></td>
-                        <td><button id="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $product_code; ?>', '<?php echo $page; ?>')">Eliminar conteo</button></td>                        
+                        <th>ID</th>
+                        <th>Código</th>
+                        <th>Cantidad</th>
+                        <th>Ubicación</th>
+                        <th>Contado por</th>
+                        <th>Fecha conteo</th>
+                        <th>Modificado por</th>
+                        <th>Fecha modificación</th>
+                        <th colspan="2">Opciones</th>
                     </tr>
+                </thead>
+                <tbody>                
+                    <?php
+                        while ($row = $count_by_code->fetch_assoc()) :
+                            $user_name = $connection->get_user_name($row['id_usuario']);
 
-                <?php
-                    endwhile;
-                    $count_by_code->free();                    
-                ?>
+                            if (!empty($row['modif_por'])) {
+                                $modified_by = $connection->get_user_name($row['modif_por']);
+                            } else {
+                                $modified_by = "";
+                            }
+                    ?>
+                        <tr>
+                            <td><?php echo $row['id']; ?></td>
+                            <td><?php echo $row['codigo_producto']; ?></td>
+                            <td><?php echo $row['cantidad']; ?></td>
+                            <td><?php echo $row['ubicacion']; ?></td>
+                            <td><?php echo $user_name; ?></td>
+                            <td><?php echo $row['registrado']; ?></td>
+                            <td><?php echo $modified_by; ?></td>
+                            <td><?php echo $row['modificado']; ?></td>                        
+                            <td><a href="modify_count.php?id=<?php echo urlencode($row['id']); ?>&page=<?php echo $page; ?>" class="button-table">Modificar</a></td>
+                            <td><button id="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $product_code; ?>', '<?php echo $page; ?>')">Eliminar conteo</button></td>                        
+                        </tr>
+
+                    <?php
+                        endwhile;
+                        $count_by_code->free();                    
+                    ?>
+                </tbody>
             </table>
         <?php else: ?>
             <?php while ($row = $count_by_code->fetch_assoc()) : 

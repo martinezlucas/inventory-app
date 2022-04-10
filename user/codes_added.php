@@ -51,12 +51,13 @@
 
             $code_data = $connection->get_added_count($code);
 
-            if(empty($code_data)) {
+            if($code_data->num_rows == 0) {
 
+                $code_data->free();
                 $error = "No se encuentra el código: " . $code;                
             }
         }        
-    }
+    }   
 ?>
 
 <!DOCTYPE html>
@@ -71,6 +72,10 @@
 </head>
 <body>
     <header class="header">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
+            <input type="text" name="code" id="code" placeholder="Buscar código" required>            
+            <input type="submit" name="search" value="&#128269;">
+        </form>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -87,49 +92,84 @@
 
     <main>
                
-       <h1 class="center-text hidden-block">Códigos agregados general</h1>
-       <br>
-       <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
-            <input type="text" name="code" id="code" placeholder="Buscar código" required>            
-            <input type="submit" name="search" value="&#128269;">
-        </form>
+       <h1 class="center-text hidden-block">Códigos agregados general</h1>      
+       
        <br>
        <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
 
-       <table class="table hidden-table">           
-           <tr>
-               <th class="column-title">ID</th>
-               <th class="column-title">Código</th>
-               <th class="column-title">Cantidad</th>
-               <th class="column-title">Descripción</th>
-               <th class="column-title">Ubicación</th>
-               <th class="column-title">Contado por</th>
-               <th class="column-title">Fecha conteo</th>
-               <th class="column-title">Modificado por</th>
-               <th class="column-title">Fecha modificación</th>
-           </tr>
+       <table class="hidden-table">           
+           <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Cantidad</th>
+                    <th>Descripción</th>
+                    <th>Ubicación</th>
+                    <th>Contado por</th>
+                    <th>Fecha conteo</th>
+                    <th>Modificado por</th>
+                    <th>Fecha modificación</th>
+                    <th colspan="2">Opciones</th>
+                </tr>
+           </thead>
 
-            <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
-
+            <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>                
                 <?php if(!empty($error)): ?>
                     <br>
                     <p class="center-text"><?php echo $error ?></p>
                     <br>
-                <?php else: 
-                    while($row = $code_data->fetch_assoc()): 
-                        $user_name = $connection->get_user_name($row['id_usuario']);
+                <?php else: ?>
+                    <tbody>
+                        <?php  
+                            while($row = $code_data->fetch_assoc()): 
+                                $user_name = $connection->get_user_name($row['id_usuario']);
 
-                        if(empty($row['modif_por'])) {
-                            $modified_by = "";
-                        } else {
-                            $modified_by = $connection->get_user_name($row['modif_por']);
-                        }
-                ?>
+                                if(empty($row['modif_por'])) {
+                                    $modified_by = "";
+                                } else {
+                                    $modified_by = $connection->get_user_name($row['modif_por']);
+                                }
+                        ?>
+                        <tr>
+                            <td><?php echo $row['id']; ?></td>
+                            <td><?php echo $row['codigo']; ?></td>
+                            <td><?php echo $row['cantidad']; ?></td>
+                            <td style="max-width: 30rem;"><?php echo $row['descripcion']; ?></td>
+                            <td style="width: 20rem;"><?php echo $row['ubicacion']; ?></td>
+                            <td><?php echo $user_name; ?></td>
+                            <td><?php echo $row['registrado']; ?></td>
+                            <td><?php echo $modified_by; ?></td>
+                            <td><?php echo $row['modificado']; ?></td>
+                            <td><a href="modify_add.php?id=<?php echo $row['id']; ?>&page=codes_added" class="button-table">Modificar</a></td>
+                            <td><button id="delete-button" onclick="deleteAdd(<?php echo $row['id']; ?>, 'codes_added')">Eliminar</button></td>
+                        </tr>
+
+                        <?php 
+                            endwhile; 
+                            $code_data->free();
+                            $connection->close();
+                        ?>
+                    </tbody>                 
+                    
+                <?php endif; ?>    
+
+            <?php else: ?> 
+                <tbody>
+                    <?php 
+                        while($row = $codes_per_page->fetch_assoc()): 
+                            $user_name = $connection->get_user_name($row['id_usuario']);
+
+                            if(empty($row['modif_por'])) {
+                                $modified_by = "";
+                            } else {
+                                $modified_by = $connection->get_user_name($row['modif_por']);
+                            }
+                    ?>
                     <tr>
                         <td><?php echo $row['id']; ?></td>
                         <td><?php echo $row['codigo']; ?></td>
                         <td><?php echo $row['cantidad']; ?></td>
-                        <td style="width: 20rem;"><?php echo $row['descripcion']; ?></td>
+                        <td style="max-width: 30rem;"><?php echo $row['descripcion']; ?></td>
                         <td style="width: 20rem;"><?php echo $row['ubicacion']; ?></td>
                         <td><?php echo $user_name; ?></td>
                         <td><?php echo $row['registrado']; ?></td>
@@ -141,42 +181,10 @@
 
                     <?php 
                         endwhile; 
-                        $code_data->free();
+                        $codes_per_page->free();
                         $connection->close();
                     ?>
-                    
-                <?php endif; ?>    
-
-            <?php else: ?> 
-                <?php 
-                    while($row = $codes_per_page->fetch_assoc()): 
-                        $user_name = $connection->get_user_name($row['id_usuario']);
-
-                        if(empty($row['modif_por'])) {
-                            $modified_by = "";
-                        } else {
-                            $modified_by = $connection->get_user_name($row['modif_por']);
-                        }
-                ?>
-                <tr>
-                    <td><?php echo $row['id']; ?></td>
-                    <td><?php echo $row['codigo']; ?></td>
-                    <td><?php echo $row['cantidad']; ?></td>
-                    <td style="width: 20rem;"><?php echo $row['descripcion']; ?></td>
-                    <td style="width: 20rem;"><?php echo $row['ubicacion']; ?></td>
-                    <td><?php echo $user_name; ?></td>
-                    <td><?php echo $row['registrado']; ?></td>
-                    <td><?php echo $modified_by; ?></td>
-                    <td><?php echo $row['modificado']; ?></td>
-                    <td><a href="modify_add.php?id=<?php echo $row['id']; ?>&page=codes_added" class="button-table">Modificar</a></td>
-                    <td><button id="delete-button" onclick="deleteAdd(<?php echo $row['id']; ?>, 'codes_added')">Eliminar</button></td>
-                </tr>
-
-                <?php 
-                    endwhile; 
-                    $codes_per_page->free();
-                    $connection->close();
-                ?>
+                </tbody>                
             <?php endif; ?>    
        </table> 
        <br>

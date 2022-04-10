@@ -59,7 +59,7 @@
                     
                 } else {
     
-                    header('location:../user/count.php?code=' . urlencode($code) . "&location=" . urldecode($location) . "&page=search");
+                    header('location:../user/count.php?code=' . urlencode($code) . "&page=search");
                     die();
                 }
             }
@@ -84,7 +84,8 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Buscar producto</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -99,8 +100,7 @@
     </header>
 
     <main>        
-        <h1 class="center-text">Buscar producto</h1>
-
+        
         <div class="soft-border info" id="code-added-div">
             <p>Último código agregado: <span id="code-added"><?php echo $add_code; ?></span></p>
             <p>Cantidad: <?php echo $add_quantity; ?></p>

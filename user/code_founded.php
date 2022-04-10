@@ -30,7 +30,8 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Detalle del producto</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -38,15 +39,14 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="../user/search.php" class="navigation-option">Atrás</a>
-                <a href="../user/menu.php" class="navigation-option">Menú principal</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="../user/search.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../user/menu.php" class="navigation-option cl-black">Menú principal</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
-    <main>        
-        <h1 class="center-text">Detalle del producto</h1>
+    <main>                
         <br>
         <div class="form soft-border">
             <p>Línea: <?php echo $code_data['linea']; ?></p>

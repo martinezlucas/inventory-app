@@ -74,6 +74,12 @@
 </head>
 <body>
     <header class="header">
+
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
+            <input type="text" name="code" id="code" placeholder="Buscar código" required>            
+            <input type="submit" name="search" value="&#128269;">
+        </form>
+
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -90,14 +96,9 @@
     </header>
 
     <main>               
-        <h1 class="center-text hidden-block">Códigos subidos a la base de datos</h1>
+        <h1 class="center-text hidden-block">Tabla de artículos</h1>
         <br>
         <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
-            <input type="text" name="code" id="code" placeholder="Buscar código" required>            
-            <input type="submit" name="search" value="&#128269;">
-        </form>
-        <br>
         <p class="center-text hidden-block">Códigos subidos: <?php echo $codes_count; ?>, códigos contados: <?php echo $sum_of_all_codes; ?>
             , porcentaje del conteo:
 
@@ -112,20 +113,22 @@
         <br>
 
        <table class="hidden-table">           
-           <tr>
-               <th class="column-title">ID</th>
-               <th class="column-title">Código</th>
-               <th class="column-title">Descripción</th>
-               <th class="column-title">Tipo</th>
-               <th class="column-title">Marca</th>
-               <th class="column-title">Referencia</th>
-               <th class="column-title">Almacén</th>
-               <th class="column-title">Comprometido</th>
-               <th class="column-title">Stock actual</th>
-               <th class="column-title">U. contadas</th>
-               <th class="column-title">Diferencia</th>
-               <th class="column-title">Subido</th>
-           </tr>
+           <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Tipo</th>
+                    <th>Marca</th>
+                    <th>Almacén</th>
+                    <th>Comprometido</th>
+                    <th>Stock actual</th>
+                    <th>U. contadas</th>
+                    <th>Diferencia</th>
+                    <th>Subido</th>
+                    <th>Opciones</th>
+                </tr>
+           </thead>
 
            <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
                 <?php if(!empty($error)): ?>
@@ -145,55 +148,59 @@
                             $difference = "Sin contar";
                         }
                 ?>
-                    <td><?php echo $code_data['linea']; ?></td>
-                    <td><?php echo $code_data['codigo']; ?></td>
-                    <td style="width: 20rem;"><?php echo $code_data['descripcion']; ?></td>
-                    <td><?php echo $code_data['tipo']; ?></td>
-                    <td><?php echo $code_data['marca']; ?></td>
-                    <td><?php echo $code_data['referencia']; ?></td>
-                    <td><?php echo $code_data['almacen']; ?></td>
-                    <td><?php echo $code_data['comprometido']; ?></td>
-                    <td><?php echo $code_data['stock_actual']; ?></td>
-                    <td class="bg-lightblue"><?php echo $sum_of_code; ?></td>
-                    <td><?php echo $difference; ?></td>
-                    <td><?php echo $code_data['registrado']; ?></td>
-                    <td><a href="count_details.php?code=<?php echo urlencode($code_data['codigo']); ?>&page=table" rel="noreferrer noopener" class="button-table">Detalles conteo</a></td>
+                    <tbody>
+                        <tr>
+                            <td><?php echo $code_data['linea']; ?></td>
+                            <td><?php echo $code_data['codigo']; ?></td>
+                            <td style="max-width: 30rem;"><?php echo $code_data['descripcion']; ?></td>
+                            <td><?php echo $code_data['tipo']; ?></td>
+                            <td><?php echo $code_data['marca']; ?></td>
+                            <td><?php echo $code_data['almacen']; ?></td>
+                            <td><?php echo $code_data['comprometido']; ?></td>
+                            <td><?php echo $code_data['stock_actual']; ?></td>
+                            <td class="bg-lightblue"><?php echo $sum_of_code; ?></td>
+                            <td><?php echo $difference; ?></td>
+                            <td><?php echo $code_data['registrado']; ?></td>
+                            <td><a href="count_details.php?code=<?php echo urlencode($code_data['codigo']); ?>&page=table" rel="noreferrer noopener" class="button-table">Detalles conteo</a></td>
+                        </tr>
+                    </tbody>
 
                 <?php endif; ?>
            <?php else: ?>
-                <?php 
-                    while($row = $codes_per_page->fetch_assoc()):
-                        $sum_of_code = $connection->get_sum_of_code($row['codigo']);
-                        
-                        if(!empty($sum_of_code)) {
+                <tbody>
+                    <?php 
+                        while($row = $codes_per_page->fetch_assoc()):
+                            $sum_of_code = $connection->get_sum_of_code($row['codigo']);
+                            
+                            if(!empty($sum_of_code)) {
 
-                            $difference = floatval($sum_of_code) - (floatval($row['stock_actual']) - floatval($row['comprometido']));
-                        } else {
+                                $difference = floatval($sum_of_code) - (floatval($row['stock_actual']) - floatval($row['comprometido']));
+                            } else {
 
-                            $difference = "Sin contar";
-                        }
-                ?>
-                <tr>
-                    <td><?php echo $row['linea']; ?></td>
-                    <td><?php echo $row['codigo']; ?></td>
-                    <td style="width: 20rem;"><?php echo $row['descripcion']; ?></td>
-                    <td><?php echo $row['tipo']; ?></td>
-                    <td><?php echo $row['marca']; ?></td>
-                    <td><?php echo $row['referencia']; ?></td>
-                    <td><?php echo $row['almacen']; ?></td>
-                    <td><?php echo $row['comprometido']; ?></td>
-                    <td><?php echo $row['stock_actual']; ?></td>
-                    <td><?php echo $sum_of_code; ?></td>
-                    <td><?php echo $difference; ?></td>
-                    <td><?php echo $row['registrado']; ?></td>
-                    <td><a href="count_details.php?code=<?php echo urlencode($row['codigo']); ?>&page=table" rel="noreferrer noopener" class="button-table">Detalles conteo</a></td>
-                </tr>
+                                $difference = "Sin contar";
+                            }
+                    ?>
+                    <tr>
+                        <td><?php echo $row['linea']; ?></td>
+                        <td><?php echo $row['codigo']; ?></td>
+                        <td style="max-width: 30rem;"><?php echo $row['descripcion']; ?></td>
+                        <td><?php echo $row['tipo']; ?></td>
+                        <td><?php echo $row['marca']; ?></td>
+                        <td><?php echo $row['almacen']; ?></td>
+                        <td><?php echo $row['comprometido']; ?></td>
+                        <td><?php echo $row['stock_actual']; ?></td>
+                        <td><?php echo $sum_of_code; ?></td>
+                        <td><?php echo $difference; ?></td>
+                        <td><?php echo $row['registrado']; ?></td>
+                        <td><a href="count_details.php?code=<?php echo urlencode($row['codigo']); ?>&page=table" rel="noreferrer noopener" class="button-table">Detalles conteo</a></td>
+                    </tr>
 
-                <?php 
-                    endwhile; 
-                    $codes_per_page->free();
-                    $connection->close();
-                ?>
+                    <?php 
+                        endwhile; 
+                        $codes_per_page->free();
+                        $connection->close();
+                    ?>
+                </tbody>
            <?php endif; ?>
         </table> 
         
@@ -201,7 +208,7 @@
         <br>
         <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
             <div class="hidden-flex">
-                <a href="codes_table.php" rel="noreferrer noopener" class="button border cl-black">Reiniciar</a>
+                <a href="codes_table.php" rel="noreferrer noopener" class="button bg-button cl-white">Reiniciar</a>
             </div>
         <?php endif; ?>
     </main>

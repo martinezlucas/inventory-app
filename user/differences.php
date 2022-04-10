@@ -57,12 +57,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Códigos</title>
+    <title>Diferencias del conteo</title>
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
     <header class="header">
+
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
+            <input type="text" name="code" id="code" placeholder="Buscar código" required>            
+            <input type="submit" name="search" value="&#128269;">
+        </form>
+
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -71,7 +77,6 @@
             </a>
             <nav class="navigation">
                 <a href="../user/menu.php" class="navigation-option cl-black">Atrás</a>
-                <a href="load_data.php" class="navigation-option cl-black">Nuevo inventario</a>
                 <a href="../server/download_differences.php" class="navigation-option cl-black">Descargar tabla</a>
                 <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
@@ -80,27 +85,25 @@
 
     <main>
         <h1 class="center-text hidden-block">Diferencias del conteo</h1>
-        <br>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="search hidden-flex">
-            <input type="text" name="code" id="code" placeholder="Buscar código" required>            
-            <input type="submit" name="search" value="&#128269;">
-        </form>
-        <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
-        <br>               
-        <table class="table hidden-table">
-            <tr>
-                <th class="column-title">ID</th>
-                <th class="column-title">Código</th>
-                <th class="column-title">Descripción</th>
-                <th class="column-title">Tipo</th>
-                <th class="column-title">Marca</th>
-                <th class="column-title">Almacén</th>
-                <th class="column-title">Comprometido</th>
-                <th class="column-title">Stock actual</th>
-                <th class="column-title">U. contadas</th>
-                <th class="column-title">Diferencia</th>
-                <th class="column-title">Subido</th>
-            </tr>
+        <br>        
+        <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>                       
+        <table class="hidden-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Tipo</th>
+                    <th>Marca</th>
+                    <th>Almacén</th>
+                    <th>Comprometido</th>
+                    <th>Stock actual</th>
+                    <th>U. contadas</th>
+                    <th>Diferencia</th>
+                    <th>Subido</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
 
             <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
                 <?php if(!empty($error)): ?>

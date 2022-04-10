@@ -45,7 +45,8 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Actualizar producto agregado</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -54,19 +55,18 @@
             </a>
             <nav class="navigation">
                 <?php if($page == "user_adds"): ?>
-                    <a href="user_adds.php" class="navigation-option">Atrás</a>
+                    <a href="user_adds.php" class="navigation-option cl-black">Atrás</a>
                 <?php else: ?>
-                    <a href="codes_added.php" class="navigation-option">Atrás</a>
+                    <a href="codes_added.php" class="navigation-option cl-black">Atrás</a>
                 <?php endif; ?>
 
-                <a href="../user/menu.php" class="navigation-option">Menú principal</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="../user/menu.php" class="navigation-option cl-black">Menú principal</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
-    <main>        
-        <h1 class="center-text">Actualizar producto agregado</h1>
+    <main>                
         <br>
         <form action="../server/update_add.php" id="sent-form" method="POST" class="form soft-border">
             <p>ID: <?php echo $add_data['id']; ?></p>
