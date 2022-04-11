@@ -159,15 +159,13 @@ h2 {
 }
 
 .card input,
-.card button,
 .card svg {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
-.card input,
-.card button {
+.card input {
     margin-bottom: 1rem;
     padding: 1rem;
 }
@@ -479,8 +477,12 @@ h2 {
 }
 
 .card-menu {
-    width: fit-content;
-    margin: auto;
+    display: flex;
+    justify-content: center;    
+}
+
+.card-menu a {
+    display: inline;
 }
 
 .pagination-menu a,
@@ -519,5 +521,6 @@ h2 {
     text-transform: capitalize;
     font-weight: bold;
     border: 0.1rem solid black;
-    border-radius: 0.5rem;
+    border-radius: 1.8rem;
+    padding: 1.5rem;
 }

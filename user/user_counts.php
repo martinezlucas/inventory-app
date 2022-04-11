@@ -108,8 +108,8 @@
                         <p>Modificado: <?php echo $row['modificado']; ?></p>
                         <br>
                         <div class="card-menu">
-                            <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="button soft-border cl-white bg-green">Modificar</a>
-                            <button id="delete-button" class="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $row['codigo_producto']; ?>', 'user_counts')" style="display: inline;">Eliminar conteo</button>
+                            <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="button border cl-white bg-green">Modificar</a>
+                            <button id="delete-button" class="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $row['codigo_producto']; ?>', 'user_counts')">Eliminar</button>
                         </div>
                     </div>
 
@@ -131,8 +131,8 @@
                     <p>Modificado: <?php echo $row['modificado']; ?></p>
                     <br>
                     <div class="card-menu">
-                        <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="button soft-border cl-white bg-green">Modificar</a>
-                        <button id="delete-button" class="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $row['codigo_producto']; ?>', 'user_counts')" style="display: inline;">Eliminar conteo</button>
+                        <a href="modify_count.php?id=<?php echo $row['id']; ?>&page=user_counts" class="button border cl-white bg-green">Modificar</a>
+                        <button id="delete-button" class="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $row['codigo_producto']; ?>', 'user_counts')">Eliminar</button>
                     </div>
                 </div>
             <?php
