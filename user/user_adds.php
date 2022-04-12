@@ -68,7 +68,7 @@
 
 <body>
     <header class="header-menu">
-        <h1 class="cl-white no-margin">Códigos por usuario</h1>
+        <h1 class="cl-white no-margin">Códigos agregados por usuario</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>

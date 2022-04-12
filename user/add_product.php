@@ -1,17 +1,23 @@
 <?php
 
     require '../server/connection.php';
+    require '../server/validate.php';
 
     session_start();
     
     if(!isset($_SESSION['user_id'])) {
 
         header('location:../');
+        die();
     }
 
     if(isset($_GET['code'])) {
-        $code = $_GET['code'];
+
+        $validate = new Validate();
+        $code = htmlspecialchars_decode($validate->input($_GET['code']));
+
     } else {
+        
         $code = "";
     }
 
@@ -40,16 +46,14 @@
                 <span></span>
             </a>
             <nav class="navigation">
-                <a href="../user/search_product.php" class="navigation-option">Atrás</a>
-                <a href="../server/logout.php" class="navigation-option">Cerrar sesión</a>
+                <a href="../user/search_product.php" class="navigation-option cl-black">Atrás</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
-    <main>               
-
+    <main> 
         <br>
-
         <form action="../server/add_count.php" method="POST" class="form soft-border">
             <label for="code">Código</label>
             <input type="text" id="code" name="code" placeholder="Código" value="<?php echo $code; ?>" required>
@@ -60,7 +64,6 @@
             <label for="location">Ubicación</label>            
             <input type="text" name="location" id="location" value="<?php echo $location; ?>" required>
             <input type="submit" name="add-count" value="Guardar">
-
         </form>        
     </main>
 </body>

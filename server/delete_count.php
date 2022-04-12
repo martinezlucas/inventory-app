@@ -50,7 +50,11 @@
                     die();
 
                 case "user_counts":
-                    header('location:../user/user_counts.php');
+                    header('location:../user/code_deleted.php?page=user_counts');
+                    die();
+
+                case "inventory":
+                    header('location:../user/inventory_count.php');
                     die();
 
                 default:

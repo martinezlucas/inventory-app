@@ -42,7 +42,7 @@
             switch($page){
 
                 case "user_adds":
-                    header('location:../user/user_adds.php');
+                    header('location:../user/code_deleted.php?page=user_adds');
                     die();
                     break;
                 

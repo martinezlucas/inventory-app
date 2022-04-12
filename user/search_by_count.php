@@ -10,10 +10,9 @@
         header('location:../');
         die();
 
-    } else {
-               
+    } else {               
 
-        if(isset($_POST['search'])) {             
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {             
             
             $connection = new Connection();
             $validate = new Validate();
@@ -38,7 +37,7 @@
                 } else {
                     
                     $connection->close();
-                    header('location:../user/code_founded.php?code=' . urlencode($code));
+                    header('location:../user/count_details.php?code=' . urlencode($code) . '&page=search');
                     die();
                 }
             }
@@ -78,7 +77,7 @@
 
     <main>                
         <br>
-        <form method="POST" class="form soft-border">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="form soft-border">
             <input type="text" name="code" id="code" placeholder="Código" required>            
             <input type="submit" name="search" value="Buscar">
         </form>

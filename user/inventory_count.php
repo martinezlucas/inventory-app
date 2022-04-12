@@ -109,7 +109,7 @@
                     <th>Fecha conteo</th>
                     <th>Modificado por</th>
                     <th>Fecha modificación</th>
-                    <th>Opciones</th>
+                    <th colspan="2">Opciones</th>
                 </tr>
            </thead>
 
@@ -140,7 +140,8 @@
                             <td><?php echo $row['registrado']; ?></td>
                             <td><?php echo $modified_by; ?></td>
                             <td><?php echo $row['modificado']; ?></td>
-                            <td><a href="count_details.php?code=<?php echo urlencode($row['codigo_producto']); ?>&page=inventory" rel="noreferrer noopener" class="button-table">Detalles conteo</a></td>
+                            <td><a href="modify_count.php?id=<?php echo urlencode($row['id']); ?>&page=inventory" class="button-table">Modificar</a></td>
+                            <td><button id="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $row['codigo_producto']; ?>', 'inventory')">Eliminar</button></td>                            
                         </tr>
 
                         <?php 
@@ -171,7 +172,8 @@
                         <td><?php echo $row['registrado']; ?></td>
                         <td><?php echo $modified_by; ?></td>
                         <td><?php echo $row['modificado']; ?></td>
-                        <td><a href="count_details.php?code=<?php echo urlencode($row['codigo_producto']); ?>&page=inventory" rel="noreferrer noopener" class="button-table">Detalles conteo</a></td>
+                        <td><a href="modify_count.php?id=<?php echo urlencode($row['id']); ?>&page=inventory" class="button-table">Modificar</a></td>
+                        <td><button id="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $row['codigo_producto']; ?>', 'inventory')">Eliminar</button></td>
                     </tr>
                     <?php 
                         endwhile; 
@@ -186,9 +188,10 @@
        <br>
         <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>    
             <div class="hidden-flex">
-                <a href="codes_table.php" rel="noreferrer noopener" class="button border cl-black">Reiniciar</a>
+                <a href="inventory_count.php" rel="noreferrer noopener" class="button bg-button cl-white">Reiniciar</a>
             </div>
         <?php endif; ?>
     </main>
+    <script src="../js/confirm.js"></script>
 </body>
 </html>

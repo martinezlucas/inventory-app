@@ -21,13 +21,24 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="header">
-        <a href="../server/logout.php" class="button bg-white">Cerrar sesión</a>
+    <header class="header-menu">
+        <h1 class="cl-white no-margin">Error</h1>
+        <div class="options">
+            <a href="#" class="options-button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+            <nav class="navigation">
+                <a href="../user/menu.php" class="navigation-option cl-black">Menú principal</a>
+                <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
+            </nav>
+        </div>        
     </header>
 
     <main>        
-        <h1 class="center-text">Error</h1>
-        <p>
+        <br>
+        <p class="center-text">
             Se ha producido un error al realizar la opreación seleccionada.
         </p>
     </main>

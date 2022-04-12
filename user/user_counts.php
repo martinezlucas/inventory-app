@@ -45,6 +45,7 @@
             if ($code_count == 0) {
 
                 $error = "No se encuentra el código: " . $code;
+                
             } else {
 
                 $code_counted_by_user = $connection->get_count_by_code_and_user($code, $user_id);

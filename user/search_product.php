@@ -129,9 +129,9 @@
             <?php if(!$empty_string): ?>
                 
                 <a href="add_product.php?code=<?php echo $code; ?>" class="button block-button bg-green cl-white">Agregar al conteo</a>
-
-                <?php if(!empty($similar_codes)): ?>
-                    <br>
+                
+                <?php if($similar_codes->num_rows != 0): ?>
+                    <br>                    
                     <h3 class="center-text">Códigos similares</h3>
                     
                     <?php while($row = $similar_codes->fetch_assoc()): ?>

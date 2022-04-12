@@ -33,6 +33,10 @@
                 $back = 'inventory_count.php';
                 break;
 
+            case 'search':
+                $back = 'search_by_count.php';
+                break;
+
             default:
                 header('location:../');
                 die();
@@ -74,7 +78,7 @@
             <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
         <?php endif; ?>   
 
-        <?php if($page != 'count' && $_SESSION['user_rol'] == 1): ?>
+        <?php if(($page != 'count' && $page != 'search') && $_SESSION['user_rol'] == 1): ?>
             <table class="hidden-table">
                 <thead>
                     <tr>
@@ -110,7 +114,7 @@
                             <td><?php echo $modified_by; ?></td>
                             <td><?php echo $row['modificado']; ?></td>                        
                             <td><a href="modify_count.php?id=<?php echo urlencode($row['id']); ?>&page=<?php echo $page; ?>" class="button-table">Modificar</a></td>
-                            <td><button id="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $product_code; ?>', '<?php echo $page; ?>')">Eliminar conteo</button></td>                        
+                            <td><button id="delete-button" onclick="deleteCount(<?php echo $row['id']; ?>, '<?php echo $row['codigo_producto']; ?>', '<?php echo $page; ?>')">Eliminar</button></td>
                         </tr>
 
                     <?php

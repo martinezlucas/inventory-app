@@ -1,6 +1,7 @@
 <?php
 
     require '../server/connection.php';
+    require '../server/validate.php';
 
     session_start();
     
@@ -8,6 +9,28 @@
 
         header('location:../');
         die();
+    }
+
+    if(!isset($_GET['page'])) {
+        header('location:../');
+        die();
+    }
+
+    $validate = new Validate();
+    $page = $validate->input($_GET['page']);
+
+    switch($page) {
+        case 'user_counts':
+            $back = 'user_counts.php';
+            break;
+        
+        case 'user_adds':
+            $back = 'user_adds.php';
+            break;
+
+        default:
+            header('location:../');
+            die();
     }
 ?>
 
@@ -23,14 +46,14 @@
 </head>
 <body>
     <header class="header-menu">
-        <h1 class="cl-white no-margin">Conteo exitoso</h1>
+        <h1 class="cl-white no-margin">Conteo borrado</h1>
         <a href="../server/logout.php" class="button btn-mn block bg-white cl-black">Cerrar sesión</a>
     </header>
 
     <main>
         <br>        
         <nav class="menu soft-border">
-            <a href="search_product.php" class="button center-text bg-blue cl-white">Nuevo Conteo</a>
+            <a href="<?php echo $back; ?>" class="button center-text bg-blue cl-white">Atrás</a>
             <a href="menu.php" class="button center-text bg-blue cl-white">Menú principal</a>
         </nav>
     </main>

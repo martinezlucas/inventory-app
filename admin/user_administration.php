@@ -41,6 +41,7 @@
         if (empty($user)) {
 
             $error = "Se ha ingresado una cadena vacía";
+            
         } else {
 
             $user_count = $connection->find_user($user);
@@ -48,6 +49,7 @@
             if ($user_count == 0) {
 
                 $error = "No se encuentra el usuario con nombre: " . $user;
+
             } else {
 
                 $users_data = $connection->get_users_by_name($user);
