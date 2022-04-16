@@ -1,6 +1,6 @@
 <?php
 
-    require '../server/connection.php';
+    require '../../server/connection.php';
 
     session_start();
     
