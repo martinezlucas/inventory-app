@@ -1,7 +1,7 @@
 <?php
 
-    require '../server/connection.php';
-    require '../server/validate.php';
+    require 'server/connection.php';
+    require 'server/validate.php';
 
     $error_name = "";
     $error_password = "";

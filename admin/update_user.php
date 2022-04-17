@@ -36,6 +36,7 @@
 </head>
 <body>
     <header class="header">
+        <h1 class="cl-white no-margin">Actualizar usuario</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -49,8 +50,7 @@
         </div>
     </header>
 
-    <main>        
-        <h1 class="center-text hidden-block">Actualizar usuario</h1>
+    <main>                
         <br>
         <p class="center-text hidden-message">Para visualizar la tabla utilice una computadora de escritorio o portatil</p>
         <form action="../server/update_profile.php" class="hidden-form soft-border" method="POST">

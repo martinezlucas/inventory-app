@@ -35,6 +35,7 @@
 </head>
 <body>
     <header class="header">
+        <h1 class="cl-white no-margin">Creación de usuarios</h1>
         <div class="options">
             <a href="#" class="options-button">
                 <span></span>
@@ -49,8 +50,7 @@
         </div>
     </header>
 
-    <main>        
-        <h1 class="center-text">Creación de usuarios</h1>
+    <main>                
         <br>
         <form action="../server/create_profile.php" class="form soft-border" method="POST">
             <label for="name">Nombre</label>

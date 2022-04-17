@@ -67,6 +67,7 @@
             </a>
             <nav class="navigation">
                 <a href="<?php echo $back; ?>" class="navigation-option cl-black">Atrás</a>
+                <a href="menu.php" class="navigation-option cl-black">Menú principal</a>
                 <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
         </div>

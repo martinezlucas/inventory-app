@@ -83,6 +83,7 @@
                 <span></span>
             </a>
             <nav class="navigation">
+                <a href="../user/menu.php" class="navigation-option cl-black">Atrás</a>
                 <a href="../user/menu.php" class="navigation-option cl-black">Menú principal</a>
                 <a href="../server/logout.php" class="navigation-option cl-black">Cerrar sesión</a>
             </nav>
